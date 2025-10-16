@@ -160,45 +160,80 @@ if ( ! empty( $inline_styles ) ) {
 }
 ?>
 <div <?php echo $wrapper_attributes; ?>>
-    <div class="wp-block-buttons shop-actions">
-        <?php if ( $show_open_status && isset( $place_data['is_open_now'] ) ): ?>
-        <div class="wp-block-button open-status-button">
-            <button class="wp-block-button__link wp-element-button <?php echo $place_data['is_open_now'] ? 'open' : 'closed'; ?> size-<?php echo esc_attr( $status_badge_size ); ?>" 
-                    style="background-color: <?php echo esc_attr( $place_data['is_open_now'] ? ( $open_status_color ?: '#10b981' ) : ( $closed_status_color ?: '#ef4444' ) ); ?>;"
-                    disabled>
-                <?php echo $place_data['is_open_now'] ? esc_html__( 'Open', 'localscoop' ) : esc_html__( 'Closed', 'localscoop' ); ?>
-            </button>
+    <div class="localscoop-content">
+        <!-- Desktop Layout -->
+        <div class="localscoop-desktop">
+            <?php if ( $show_open_status && isset( $place_data['is_open_now'] ) ): ?>
+            <div class="localscoop-card localscoop-status-card">
+                <div class="localscoop-card-content">
+                    <div class="localscoop-status-indicator <?php echo $place_data['is_open_now'] ? 'open' : 'closed'; ?>"></div>
+                    <div class="localscoop-status-text">
+                        <div class="localscoop-label"><?php esc_html_e( 'Status', 'localscoop' ); ?></div>
+                        <div class="localscoop-value"><?php echo $place_data['is_open_now'] ? esc_html__( 'OPEN', 'localscoop' ) : esc_html__( 'CLOSED', 'localscoop' ); ?></div>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
+            
+            <?php if ( $show_phone && ! empty( $place_data['phone'] ) ): ?>
+            <a href="tel:<?php echo esc_attr( $place_data['phone'] ); ?>" class="localscoop-card localscoop-action-card localscoop-phone-card">
+                <div class="localscoop-card-content">
+                    <div class="localscoop-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone" aria-hidden="true">
+                            <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>
+                        </svg>
+                    </div>
+                    <div class="localscoop-action-text">
+                        <div class="localscoop-label"><?php esc_html_e( 'Call Us', 'localscoop' ); ?></div>
+                        <div class="localscoop-value"><?php echo esc_html( $place_data['phone'] ); ?></div>
+                    </div>
+                </div>
+            </a>
+            <?php endif; ?>
+            
+            <?php if ( $show_directions && ! empty( $place_data['google_maps_url'] ) ): ?>
+            <a href="<?php echo esc_url( $place_data['google_maps_url'] ); ?>" target="_blank" rel="noopener noreferrer" class="localscoop-card localscoop-action-card localscoop-directions-card">
+                <div class="localscoop-card-content">
+                    <div class="localscoop-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-navigation" aria-hidden="true">
+                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                        </svg>
+                    </div>
+                    <div class="localscoop-action-text">
+                        <div class="localscoop-label"><?php esc_html_e( 'Navigate', 'localscoop' ); ?></div>
+                        <div class="localscoop-value"><?php esc_html_e( 'GET DIRECTIONS', 'localscoop' ); ?></div>
+                    </div>
+                </div>
+            </a>
+            <?php endif; ?>
         </div>
-        <?php endif; ?>
         
-        <?php if ( $show_phone && ! empty( $place_data['phone'] ) ): ?>
-        <div class="wp-block-button phone-button">
-            <button class="wp-block-button__link wp-element-button phone-link size-<?php echo esc_attr( $button_size ); ?>"
-                    title="<?php printf( esc_attr__( 'Call %s', 'localscoop' ), esc_attr( $place_data['phone'] ) ); ?>"
-                    aria-label="<?php printf( esc_attr__( 'Call %s', 'localscoop' ), esc_attr( $place_data['phone'] ) ); ?>"
-                    style="background-color: <?php echo esc_attr( $phone_button_color ?: '#007cba' ); ?>;"
-                    data-mobile-text="<?php echo esc_attr( $phone_text ); ?>"
-                    data-tel="<?php echo esc_attr( $place_data['phone'] ); ?>"
-                    onclick="window.open('<?php echo esc_js( 'tel:' . $place_data['phone'] ); ?>', '_self');">
-                <span class="desktop-text"><?php echo esc_html( $place_data['phone'] ); ?></span>
-                <span class="mobile-text"><?php echo esc_html( $phone_text ); ?></span>
-            </button>
+        <!-- Mobile Layout -->
+        <div class="localscoop-mobile">
+            <div class="localscoop-mobile-content">
+                <?php if ( $show_open_status && isset( $place_data['is_open_now'] ) ): ?>
+                <div class="localscoop-mobile-status">
+                    <div class="localscoop-mobile-status-indicator <?php echo $place_data['is_open_now'] ? 'open' : 'closed'; ?>"></div>
+                    <div class="localscoop-mobile-status-text"><?php echo $place_data['is_open_now'] ? esc_html__( 'OPEN', 'localscoop' ) : esc_html__( 'CLOSED', 'localscoop' ); ?></div>
+                </div>
+                <?php endif; ?>
+                
+                <?php if ( $show_phone && ! empty( $place_data['phone'] ) ): ?>
+                <a href="tel:<?php echo esc_attr( $place_data['phone'] ); ?>" class="localscoop-mobile-action localscoop-mobile-phone">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone" aria-hidden="true">
+                        <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>
+                    </svg>
+                </a>
+                <?php endif; ?>
+                
+                <?php if ( $show_directions && ! empty( $place_data['google_maps_url'] ) ): ?>
+                <a href="<?php echo esc_url( $place_data['google_maps_url'] ); ?>" target="_blank" rel="noopener noreferrer" class="localscoop-mobile-action localscoop-mobile-directions">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-navigation" aria-hidden="true">
+                        <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                    </svg>
+                </a>
+                <?php endif; ?>
+            </div>
         </div>
-        <?php endif; ?>
-        
-        <?php if ( $show_directions && ! empty( $place_data['google_maps_url'] ) ): ?>
-        <div class="wp-block-button directions-button">
-            <button class="wp-block-button__link wp-element-button directions-link size-<?php echo esc_attr( $button_size ); ?>" 
-                    title="<?php esc_attr_e( 'Get directions', 'localscoop' ); ?>"
-                    aria-label="<?php esc_attr_e( 'Get directions to business', 'localscoop' ); ?>"
-                    style="background-color: <?php echo esc_attr( $directions_button_color ?: '#10b981' ); ?>;"
-                    data-mobile-text="<?php echo esc_attr( $directions_text ); ?>"
-                    data-url="<?php echo esc_url( $place_data['google_maps_url'] ); ?>"
-                    onclick="window.open('<?php echo esc_js( esc_url( $place_data['google_maps_url'] ) ); ?>', '_blank');">
-                <span class="desktop-text"><?php esc_html_e( 'Directions', 'localscoop' ); ?></span>
-                <span class="mobile-text"><?php echo esc_html( $directions_text ); ?></span>
-            </button>
-        </div>
-        <?php endif; ?>
     </div>
 </div>

@@ -218,57 +218,81 @@ export default function Edit({ attributes, setAttributes }) {
 	// Function to render the LocalScoop toolbar content - IDENTICAL TO FRONTEND
 	const renderLocalScoopContent = (data) => {
 		return (
-			<div className="wp-block-buttons shop-actions">
-				{showOpenStatus && data.is_open_now !== null && data.is_open_now !== undefined && (
-					<div className="wp-block-button open-status-button">
-						<button 
-							className={`wp-block-button__link wp-element-button ${data.is_open_now ? 'open' : 'closed'} size-${statusBadgeSize}`}
-							style={{
-								backgroundColor: data.is_open_now ? openStatusColor : closedStatusColor
-							}}
-							title={__('Current business status', 'localscoop')}
-							disabled
-						>
-							{data.is_open_now ? __('Open', 'localscoop') : __('Closed', 'localscoop')}
-						</button>
-					</div>
-				)}
+			<div className="localscoop-content">
+				{/* Desktop Layout */}
+				<div className="localscoop-desktop">
+					{showOpenStatus && data.is_open_now !== null && data.is_open_now !== undefined && (
+						<div className="localscoop-card localscoop-status-card">
+							<div className="localscoop-card-content">
+								<div className={`localscoop-status-indicator ${data.is_open_now ? 'open' : 'closed'}`}></div>
+								<div className="localscoop-status-text">
+									<div className="localscoop-label">{__('Status', 'localscoop')}</div>
+									<div className="localscoop-value">{data.is_open_now ? __('OPEN', 'localscoop') : __('CLOSED', 'localscoop')}</div>
+								</div>
+							</div>
+						</div>
+					)}
+					
+					{showPhone && data.phone && (
+						<a href={`tel:${data.phone}`} className="localscoop-card localscoop-action-card localscoop-phone-card">
+							<div className="localscoop-card-content">
+								<div className="localscoop-icon">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone" aria-hidden="true">
+										<path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>
+									</svg>
+								</div>
+								<div className="localscoop-action-text">
+									<div className="localscoop-label">{__('Call Us', 'localscoop')}</div>
+									<div className="localscoop-value">{data.phone}</div>
+								</div>
+							</div>
+						</a>
+					)}
+					
+					{showDirections && data.google_maps_url && (
+						<a href={data.google_maps_url} target="_blank" rel="noopener noreferrer" className="localscoop-card localscoop-action-card localscoop-directions-card">
+							<div className="localscoop-card-content">
+								<div className="localscoop-icon">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-navigation" aria-hidden="true">
+										<polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+									</svg>
+								</div>
+								<div className="localscoop-action-text">
+									<div className="localscoop-label">{__('Navigate', 'localscoop')}</div>
+									<div className="localscoop-value">{__('GET DIRECTIONS', 'localscoop')}</div>
+								</div>
+							</div>
+						</a>
+					)}
+				</div>
 				
-				{showPhone && data.phone && (
-					<div className="wp-block-button phone-button">
-						<button 
-							className={`wp-block-button__link wp-element-button phone-link size-${buttonSize}`}
-							title={__('Phone', 'localscoop')}
-							style={{
-								backgroundColor: phoneButtonColor
-							}}
-							data-mobile-text={phoneIconText}
-							data-tel={data.phone}
-							onClick={() => window.open(`tel:${data.phone}`, '_self')}
-						>
-							<span className="desktop-text">{data.phone}</span>
-							<span className="mobile-text">{phoneIconText}</span>
-						</button>
+				{/* Mobile Layout */}
+				<div className="localscoop-mobile">
+					<div className="localscoop-mobile-content">
+						{showOpenStatus && data.is_open_now !== null && data.is_open_now !== undefined && (
+							<div className="localscoop-mobile-status">
+								<div className={`localscoop-mobile-status-indicator ${data.is_open_now ? 'open' : 'closed'}`}></div>
+								<div className="localscoop-mobile-status-text">{data.is_open_now ? __('OPEN', 'localscoop') : __('CLOSED', 'localscoop')}</div>
+							</div>
+						)}
+						
+						{showPhone && data.phone && (
+							<a href={`tel:${data.phone}`} className="localscoop-mobile-action localscoop-mobile-phone">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone" aria-hidden="true">
+									<path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path>
+								</svg>
+							</a>
+						)}
+						
+						{showDirections && data.google_maps_url && (
+							<a href={data.google_maps_url} target="_blank" rel="noopener noreferrer" className="localscoop-mobile-action localscoop-mobile-directions">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-navigation" aria-hidden="true">
+									<polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+								</svg>
+							</a>
+						)}
 					</div>
-				)}
-				
-				{showDirections && data.google_maps_url && (
-					<div className="wp-block-button directions-button">
-						<button 
-							className={`wp-block-button__link wp-element-button directions-link size-${buttonSize}`}
-							title={__('Directions', 'localscoop')}
-							style={{
-								backgroundColor: directionsButtonColor
-							}}
-							data-mobile-text={directionsIconText}
-							data-url={data.google_maps_url}
-							onClick={() => window.open(data.google_maps_url, '_blank')}
-						>
-							<span className="desktop-text">{__('Directions', 'localscoop')}</span>
-							<span className="mobile-text">{directionsIconText}</span>
-						</button>
-					</div>
-				)}
+				</div>
 			</div>
 		);
 	};
