@@ -1,0 +1,184 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "telex/block-localscoop",
+  "version": "0.1.0",
+  "title": "LocalScoop",
+  "category": "widgets",
+  "icon": "location-alt",
+  "description": "Local business information block.",
+  "example": {
+    "attributes": {
+      "placeId": "ChIJN1t_tDeuEmsRUsoyG83frY4"
+    }
+  },
+  "attributes": {
+    "placeId": {
+      "type": "string",
+      "default": ""
+    },
+    "showOpenStatus": {
+      "type": "boolean",
+      "default": true
+    },
+    "showPhone": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDirections": {
+      "type": "boolean",
+      "default": true
+    },
+    "openStatusColor": {
+      "type": "string",
+      "default": "#10b981"
+    },
+    "closedStatusColor": {
+      "type": "string",
+      "default": "#ef4444"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": ""
+    },
+    "mobileBarBackground": {
+      "type": "string",
+      "default": "rgba(255, 255, 255, 0.95)"
+    },
+    "phoneButtonColor": {
+      "type": "string",
+      "default": "#007cba"
+    },
+    "directionsButtonColor": {
+      "type": "string",
+      "default": "#10b981"
+    },
+    "phoneIconText": {
+      "type": "string",
+      "default": "CALL"
+    },
+    "directionsIconText": {
+      "type": "string",
+      "default": "MAP"
+    },
+    "mobileIconFontSize": {
+      "type": "number",
+      "default": 14
+    },
+    "borderRadius": {
+      "type": "number",
+      "default": 8
+    },
+    "padding": {
+      "type": "number",
+      "default": 16
+    },
+    "statusBadgeSize": {
+      "type": "string",
+      "default": "medium"
+    },
+    "buttonSize": {
+      "type": "string",
+      "default": "medium"
+    },
+    "buttonBorderWidth": {
+      "type": "number",
+      "default": 0
+    },
+    "buttonBorderStyle": {
+      "type": "string",
+      "default": "solid"
+    },
+    "buttonBorderColor": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonTextColor": {
+      "type": "string",
+      "default": "#FFFFFF"
+    },
+    "buttonHoverColor": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonHoverTextColor": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonFontSize": {
+      "type": "number",
+      "default": 16
+    },
+    "buttonFontWeight": {
+      "type": "string",
+      "default": "normal"
+    },
+    "buttonLetterSpacing": {
+      "type": "number",
+      "default": 0
+    },
+    "buttonTextTransform": {
+      "type": "string",
+      "default": "none"
+    },
+    "buttonPaddingTop": {
+      "type": "number",
+      "default": 12
+    },
+    "buttonPaddingRight": {
+      "type": "number",
+      "default": 24
+    },
+    "buttonPaddingBottom": {
+      "type": "number",
+      "default": 12
+    },
+    "buttonPaddingLeft": {
+      "type": "number",
+      "default": 24
+    },
+    "buttonMargin": {
+      "type": "number",
+      "default": 8
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "background": true,
+      "text": true,
+      "link": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    },
+    "spacing": {
+      "padding": true,
+      "margin": true
+    }
+  },
+  "keywords": [
+    "local",
+    "business",
+    "shop",
+    "phone",
+    "directions",
+    "open",
+    "closed",
+    "mobile",
+    "toolbar",
+    "buttons",
+    "customizable"
+  ],
+  "textdomain": "localscoop",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js",
+  "render": "file:./render.php"
+}

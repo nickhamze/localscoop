@@ -1,0 +1,2281 @@
+<?xml version="1.0"?><artefact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="artefact.xsd" name="LocalScoop" slug="localscoop" type="code-package" schemaVersion="2">
+  <file path="readme.txt">
+    <description>This file contains the readme information for the block. It is used to provide information about the block, its usage, and any other relevant details.</description>
+    <content><![CDATA[=== LocalScoop ===
+
+Contributors:      iconick
+Tags:              local, business, info, phone, directions, open, closed, mobile, toolbar
+Tested up to:      6.8
+Stable tag:        0.1.0
+License:           GPLv2 or later
+License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+
+Local business information block with mobile toolbar that displays business hours, phone, and directions.
+
+== Description ==
+
+The LocalScoop block displays local business information with an optimized mobile experience. On desktop, it shows normal buttons, while on mobile devices it transforms into a fixed bottom toolbar for easy access.
+
+**Key Features:**
+
+* Real-time Open/Closed Status - Displays current business status with color-coded indicators
+* Clickable Phone Number - Direct click-to-call functionality for mobile users
+* Google Maps Integration - One-click directions to the business location
+* Responsive Mobile Toolbar - Fixed bottom bar on mobile devices (900px and below)
+* Custom Text Control - Customize mobile button text in the sidebar
+* Complete Color Control - WordPress core color picker integration
+* Toggle Controls - Show/hide individual features as needed
+* Always Functional - Works with sample data even without API configuration
+
+**Mobile Experience:**
+On devices 900px and smaller, the LocalScoop buttons transform into a sleek fixed bottom bar:
+- Custom text display for phone and directions buttons
+- Full width layout with no gaps between buttons
+- Backdrop blur effect with custom background color support
+- Automatic body padding so content isn't hidden
+- Safe area handling for devices with notches
+
+**Desktop Experience:**
+On larger screens, the block displays normally with full text labels in your content flow, perfect for headers and other prominent locations.
+
+**Perfect For:**
+- Local business websites
+- Restaurant and retail sites
+- Service provider contact info
+- Mobile-first business locators
+- Any site where business contact info is important
+
+**Technical Highlights:**
+- Google Places API (New) integration
+- 30-minute cache for optimal performance
+- WordPress coding standards compliant
+- Fixed bottom mobile bar with CSS sticky positioning
+- Safe area support for modern devices
+
+== Installation ==
+
+1. Upload the plugin files to the `/wp-content/plugins/localscoop` directory, or install the plugin through the WordPress plugins screen directly.
+2. Activate the plugin through the 'Plugins' screen in WordPress
+3. Optional: Get a Google Places API key from the Google Cloud Console for real data
+4. Add the "LocalScoop" block to your content - works immediately with sample data!
+5. Customize colors and mobile text in the block settings
+
+== Configuration ==
+
+### Google Places API Setup (Optional)
+
+1. Visit the Google Cloud Console (https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the Places API (New)
+4. Create an API key and restrict it to your domain for security
+5. Enter the API key in Settings > LocalScoop
+
+### Block Usage
+
+1. Add the "LocalScoop" block to your content
+2. Works immediately with sample data
+3. Optional: Enter a Google Place ID for real business data
+4. Customize colors and mobile text in the block settings
+5. Test on mobile devices to see the fixed bottom toolbar
+
+== Frequently Asked Questions ==
+
+= Do I need an API key to use LocalScoop? =
+
+No! LocalScoop works immediately with sample data. An API key is only needed if you want to display real business information.
+
+= How do I find my Google Place ID? =
+
+Use the Google Place ID Finder online tool to search for your business and get the Place ID.
+
+= Can I customize the mobile toolbar appearance? =
+
+Yes! Use the sidebar controls to customize colors, background, and button text for the mobile toolbar.
+
+= What happens on mobile devices? =
+
+On screens 900px and below, the buttons automatically transform into a fixed bottom toolbar for better mobile usability.
+
+== Screenshots ==
+
+1. Desktop view showing normal button layout with business information
+2. Mobile view with fixed bottom toolbar
+3. Block editor interface with customization options
+4. Admin settings page for API key configuration
+
+== Changelog ==
+
+= 0.1.0 =
+* Initial release
+* Google Places API (New) integration
+* Real-time open/closed status display
+* Click-to-call phone functionality
+* Google Maps directions integration
+* Responsive mobile toolbar design
+* WordPress core color picker integration
+* Toggle controls for individual features
+* Custom mobile text control
+* Sample data fallback system
+* WordPress coding standards compliance]]></content>
+  </file>
+  <file path="src/block.json">
+    <description>This file contains metadata about the block including its name, title, category, icon, and other properties. The icon is a WordPress Dashicon name (e.g., "admin-post", "format-aside", "admin-page"). Do not use any icon that's not in the list under any circustamce. These are the only slugs available:
+	
+	menu menu-alt menu-alt2 menu-alt3 admin-site admin-site-alt admin-site-alt2 admin-site-alt3 dashboard admin-post admin-media admin-links admin-page admin-comments admin-appearance admin-plugins plugins-checked admin-users admin-tools admin-settings admin-network admin-home admin-generic admin-collapse filter admin-customizer admin-multisite welcome-write-blog welcome-add-page welcome-view-site welcome-widgets-menus welcome-comments welcome-learn-more format-aside format-image format-gallery format-video format-status format-quote format-chat format-audio camera camera-alt images-alt images-alt2 video-alt video-alt2 video-alt3 media-archive media-audio media-code media-default media-document media-interactive media-spreadsheet media-text media-video playlist-audio playlist-video controls-play controls-pause controls-forward controls-skipforward controls-back controls-skipback controls-repeat controls-volumeon controls-volumeoff image-crop image-rotate image-rotate-left image-rotate-right image-flip-vertical image-flip-horizontal image-filter undo redo database-add database database-export database-import database-remove database-view align-full-width align-pull-left align-pull-right align-wide block-default button cloud-saved cloud-upload columns cover-image ellipsis embed-audio embed-generic embed-photo embed-post embed-video exit heading html info-outline insert insert-after insert-before remove saved shortcode table-col-after table-col-before table-col-delete table-row-after table-row-before table-row-delete editor-bold editor-italic editor-ul editor-ol editor-ol-rtl editor-quote editor-alignleft editor-aligncenter editor-alignright editor-insertmore editor-spellcheck editor-expand editor-contract editor-kitchensink editor-underline editor-justify editor-textcolor editor-paste-word editor-paste-text editor-removeformatting editor-video editor-customchar editor-outdent editor-indent editor-help editor-strikethrough editor-unlink editor-rtl editor-ltr editor-break editor-code editor-paragraph editor-table align-left align-right align-center align-none lock unlock calendar calendar-alt visibility hidden post-status edit trash sticky external arrow-up arrow-down arrow-right arrow-left arrow-up-alt arrow-down-alt arrow-right-alt arrow-left-alt arrow-up-alt2 arrow-down-alt2 arrow-right-alt2 arrow-left-alt2 sort leftright randomize list-view excerpt-view grid-view move share share-alt share-alt2 rss email email-alt email-alt2 networking amazon facebook facebook-alt google instagram linkedin pinterest podio reddit spotify twitch twitter twitter-alt whatsapp xing youtube hammer art migrate performance universal-access universal-access-alt tickets nametag clipboard heart megaphone schedule tide rest-api code-standards buddicons-activity buddicons-bbpress-logo buddicons-buddypress-logo buddicons-community buddicons-forums buddicons-friends buddicons-groups buddicons-pm buddicons-replies buddicons-topics buddicons-tracking wordpress wordpress-alt pressthis update update-alt screenoptions info cart feedback cloud translation tag category archive tagcloud text bell yes yes-alt no no-alt plus plus-alt plus-alt2 minus dismiss marker star-filled star-half star-empty flag warning location location-alt vault shield shield-alt sos search slides text-page analytics chart-pie chart-bar chart-line chart-area groups businessman businesswoman businessperson id id-alt products awards forms testimonial portfolio book book-alt download upload backup clock lightbulb microphone desktop laptop tablet smartphone phone index-card carrot building store album palmtree tickets-alt money money-alt smiley thumbs-up thumbs-down layout paperclip color-picker edit-large edit-page airplane bank beer calculator car coffee drumstick food fullscreen-alt fullscreen-exit-alt games hourglass open-folder pdf pets printer privacy superhero superhero-alt</description>
+    <content><![CDATA[{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "telex/block-localscoop",
+	"version": "0.1.0",
+	"title": "LocalScoop",
+	"category": "widgets",
+	"icon": "location-alt",
+	"description": "Local business information block.",
+	"example": {
+		"attributes": {
+			"placeId": "ChIJN1t_tDeuEmsRUsoyG83frY4"
+		}
+	},
+	"attributes": {
+		"placeId": {
+			"type": "string",
+			"default": ""
+		},
+		"showOpenStatus": {
+			"type": "boolean",
+			"default": true
+		},
+		"showPhone": {
+			"type": "boolean",
+			"default": true
+		},
+		"showDirections": {
+			"type": "boolean",
+			"default": true
+		},
+		"openStatusColor": {
+			"type": "string",
+			"default": "#10b981"
+		},
+		"closedStatusColor": {
+			"type": "string",
+			"default": "#ef4444"
+		},
+		"backgroundColor": {
+			"type": "string",
+			"default": ""
+		},
+		"mobileBarBackground": {
+			"type": "string",
+			"default": "rgba(255, 255, 255, 0.95)"
+		},
+		"phoneButtonColor": {
+			"type": "string",
+			"default": "#007cba"
+		},
+		"directionsButtonColor": {
+			"type": "string",
+			"default": "#10b981"
+		},
+		"phoneIconText": {
+			"type": "string",
+			"default": "CALL"
+		},
+		"directionsIconText": {
+			"type": "string",
+			"default": "MAP"
+		},
+		"mobileIconFontSize": {
+			"type": "number",
+			"default": 14
+		},
+		"borderRadius": {
+			"type": "number",
+			"default": 8
+		},
+		"padding": {
+			"type": "number",
+			"default": 16
+		},
+		"statusBadgeSize": {
+			"type": "string",
+			"default": "medium"
+		},
+		"buttonSize": {
+			"type": "string",
+			"default": "medium"
+		},
+		"buttonBorderWidth": {
+			"type": "number",
+			"default": 0
+		},
+		"buttonBorderStyle": {
+			"type": "string",
+			"default": "solid"
+		},
+		"buttonBorderColor": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonTextColor": {
+			"type": "string",
+			"default": "#FFFFFF"
+		},
+		"buttonHoverColor": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonHoverTextColor": {
+			"type": "string",
+			"default": ""
+		},
+		"buttonFontSize": {
+			"type": "number",
+			"default": 16
+		},
+		"buttonFontWeight": {
+			"type": "string",
+			"default": "normal"
+		},
+		"buttonLetterSpacing": {
+			"type": "number",
+			"default": 0
+		},
+		"buttonTextTransform": {
+			"type": "string",
+			"default": "none"
+		},
+		"buttonPaddingTop": {
+			"type": "number",
+			"default": 12
+		},
+		"buttonPaddingRight": {
+			"type": "number",
+			"default": 24
+		},
+		"buttonPaddingBottom": {
+			"type": "number",
+			"default": 12
+		},
+		"buttonPaddingLeft": {
+			"type": "number",
+			"default": 24
+		},
+		"buttonMargin": {
+			"type": "number",
+			"default": 8
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": ["wide", "full"],
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true
+		}
+	},
+	"keywords": ["local", "business", "shop", "phone", "directions", "open", "closed", "mobile", "toolbar", "buttons", "customizable"],
+	"textdomain": "localscoop",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}]]></content>
+  </file>
+  <file path="src/index.js">
+    <description>This file registers the block, specifies the edit and save functions, and loads the block's metadata</description>
+    <content><![CDATA[
+  /**
+ * Registers a new block provided a unique name and an object defining its behavior.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
+ */
+import { registerBlockType } from '@wordpress/blocks';
+
+/**
+ * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
+ * All files containing `style` keyword are bundled together. The code used
+ * gets applied both to the front of your site and to the editor.
+ *
+ * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
+ */
+import './style.scss';
+
+/**
+ * Internal dependencies
+ */
+import Edit from './edit';
+import metadata from './block.json';
+
+/**
+ * Every block starts by registering a new block type definition.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
+ */
+registerBlockType( metadata.name, {
+	/**
+	 * @see ./edit.js
+	 */
+	edit: Edit,
+} );
+	]]></content>
+  </file>
+  <file path="src/edit.js">
+    <description>This file contains the edit function for the block which is responsible for rendering the block in the editor.</description>
+    <content><![CDATA[/**
+ * Retrieves the translation of text.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * React hook that is used to mark the block wrapper element.
+ * It provides all the necessary props like the class name.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
+ */
+import { 
+	useBlockProps, 
+	InspectorControls,
+	PanelColorSettings
+} from '@wordpress/block-editor';
+
+/**
+ * WordPress components
+ */
+import { 
+	PanelBody, 
+	TextControl, 
+	Button,
+	Spinner,
+	Notice,
+	ToggleControl,
+	RangeControl,
+	SelectControl,
+	__experimentalDivider as Divider
+} from '@wordpress/components';
+
+/**
+ * WordPress data and element hooks
+ */
+import { useState, useEffect, useRef } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
+
+/**
+ * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
+ * Those files can contain any CSS code that gets applied to the editor.
+ *
+ * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
+ */
+import './editor.scss';
+
+/**
+ * Sample data for display when no API key or place is configured
+ */
+const SAMPLE_DATA = {
+	name: 'Local Business',
+	phone: '(555) 123-4567',
+	is_open_now: true,
+	google_maps_url: 'https://maps.google.com'
+};
+
+/**
+ * Size options for buttons
+ */
+const SIZE_OPTIONS = [
+	{ label: __('Small', 'localscoop'), value: 'small' },
+	{ label: __('Medium', 'localscoop'), value: 'medium' },
+	{ label: __('Large', 'localscoop'), value: 'large' },
+	{ label: __('Extra Large', 'localscoop'), value: 'xlarge' }
+];
+
+/**
+ * Border style options
+ */
+const BORDER_STYLE_OPTIONS = [
+	{ label: __('None', 'localscoop'), value: 'none' },
+	{ label: __('Solid', 'localscoop'), value: 'solid' },
+	{ label: __('Dashed', 'localscoop'), value: 'dashed' },
+	{ label: __('Dotted', 'localscoop'), value: 'dotted' }
+];
+
+/**
+ * Font weight options
+ */
+const FONT_WEIGHT_OPTIONS = [
+	{ label: __('Normal', 'localscoop'), value: 'normal' },
+	{ label: __('Bold', 'localscoop'), value: 'bold' },
+	{ label: __('Bolder', 'localscoop'), value: 'bolder' },
+	{ label: __('Lighter', 'localscoop'), value: 'lighter' },
+	{ label: __('100', 'localscoop'), value: '100' },
+	{ label: __('200', 'localscoop'), value: '200' },
+	{ label: __('300', 'localscoop'), value: '300' },
+	{ label: __('400', 'localscoop'), value: '400' },
+	{ label: __('500', 'localscoop'), value: '500' },
+	{ label: __('600', 'localscoop'), value: '600' },
+	{ label: __('700', 'localscoop'), value: '700' },
+	{ label: __('800', 'localscoop'), value: '800' },
+	{ label: __('900', 'localscoop'), value: '900' }
+];
+
+/**
+ * The edit function describes the structure of your block in the context of the
+ * editor. This represents what the editor will render when the block is used.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
+ *
+ * @return {Element} Element to render.
+ */
+export default function Edit({ attributes, setAttributes }) {
+	const { 
+		placeId, 
+		showOpenStatus, 
+		showPhone, 
+		showDirections,
+		openStatusColor,
+		closedStatusColor,
+		backgroundColor,
+		mobileBarBackground,
+		phoneButtonColor,
+		directionsButtonColor,
+		phoneIconText,
+		directionsIconText,
+		mobileIconFontSize,
+		borderRadius,
+		padding,
+		statusBadgeSize,
+		buttonSize,
+		// Button Controls (now for all buttons)
+		buttonBorderWidth,
+		buttonBorderStyle,
+		buttonBorderColor,
+		buttonTextColor,
+		buttonHoverColor,
+		buttonHoverTextColor,
+		buttonFontSize,
+		buttonFontWeight,
+		buttonLetterSpacing,
+		buttonTextTransform,
+		buttonPaddingTop,
+		buttonPaddingRight,
+		buttonPaddingBottom,
+		buttonPaddingLeft,
+		buttonMargin
+	} = attributes;
+	
+	const [placeData, setPlaceData] = useState(SAMPLE_DATA); // Always start with sample data
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
+	
+	useEffect(() => {
+		// Always show the toolbar with sample data first
+		setPlaceData(SAMPLE_DATA);
+		
+		// Only fetch real data if we have a place ID
+		if (placeId) {
+			fetchPlaceData(placeId);
+		}
+	}, [placeId]);
+	
+	const fetchPlaceData = async (id) => {
+		setLoading(true);
+		setError(null);
+		
+		try {
+			const response = await apiFetch({
+				path: `/localscoop/v1/place/${id}`,
+				method: 'GET'
+			});
+			
+			if (response && !response.error) {
+				setPlaceData(response);
+			} else {
+				throw new Error(response?.error || __('Failed to fetch place data', 'localscoop'));
+			}
+		} catch (err) {
+			const errorMessage = err.message || __('Failed to fetch place data', 'localscoop');
+			setError(errorMessage);
+			// Keep sample data on error - LocalScoop always shows
+			setPlaceData(SAMPLE_DATA);
+		} finally {
+			setLoading(false);
+		}
+	};
+	
+	// Create dynamic styles for clean toolbar with no hardcoded values
+	const blockStyles = {
+		backgroundColor: backgroundColor || undefined,
+		// All colors come from CSS custom properties - no hardcoded values
+		'--open-status-color': openStatusColor,
+		'--closed-status-color': closedStatusColor,
+		'--status-badge-size': statusBadgeSize,
+		'--button-size': buttonSize,
+		// Mobile toolbar CSS variables - all customizable
+		'--mobile-bar-bg': mobileBarBackground,
+		'--phone-button-bg': phoneButtonColor,
+		'--directions-button-bg': directionsButtonColor,
+		'--phone-text': phoneIconText,
+		'--directions-text': directionsIconText,
+		'--mobile-text-font-size': `${mobileIconFontSize}px`,
+		// Button Styling Variables (for all buttons)
+		'--button-border-width': buttonBorderWidth ? `${buttonBorderWidth}px` : undefined,
+		'--button-border-style': buttonBorderStyle || undefined,
+		'--button-border-color': buttonBorderColor || undefined,
+		'--button-text-color': buttonTextColor || undefined,
+		'--button-hover-color': buttonHoverColor || undefined,
+		'--button-hover-text-color': buttonHoverTextColor || undefined,
+		'--button-font-size': buttonFontSize ? `${buttonFontSize}px` : undefined,
+		'--button-font-weight': buttonFontWeight || undefined,
+		'--button-letter-spacing': buttonLetterSpacing ? `${buttonLetterSpacing}px` : undefined,
+		'--button-text-transform': buttonTextTransform || undefined,
+		'--button-padding': buttonPaddingTop || buttonPaddingRight || buttonPaddingBottom || buttonPaddingLeft ? 
+			`${buttonPaddingTop || 0}px ${buttonPaddingRight || 0}px ${buttonPaddingBottom || 0}px ${buttonPaddingLeft || 0}px` : undefined,
+		'--button-margin': buttonMargin ? `${buttonMargin}px` : undefined,
+		'--button-border-radius': borderRadius ? `${borderRadius}px` : undefined
+	};
+	
+	const blockProps = useBlockProps({
+		style: blockStyles
+	});
+	
+	// Function to render the LocalScoop toolbar content - IDENTICAL TO FRONTEND
+	const renderLocalScoopContent = (data) => {
+		return (
+			<div className="wp-block-buttons shop-actions">
+				{showOpenStatus && data.is_open_now !== null && data.is_open_now !== undefined && (
+					<div className="wp-block-button open-status-button">
+						<button 
+							className={`wp-block-button__link wp-element-button ${data.is_open_now ? 'open' : 'closed'} size-${statusBadgeSize}`}
+							style={{
+								backgroundColor: data.is_open_now ? openStatusColor : closedStatusColor
+							}}
+							title={__('Current business status', 'localscoop')}
+							disabled
+						>
+							{data.is_open_now ? __('Open', 'localscoop') : __('Closed', 'localscoop')}
+						</button>
+					</div>
+				)}
+				
+				{showPhone && data.phone && (
+					<div className="wp-block-button phone-button">
+						<button 
+							className={`wp-block-button__link wp-element-button phone-link size-${buttonSize}`}
+							title={__('Phone', 'localscoop')}
+							style={{
+								backgroundColor: phoneButtonColor
+							}}
+							data-mobile-text={phoneIconText}
+							data-tel={data.phone}
+							onClick={() => window.open(`tel:${data.phone}`, '_self')}
+						>
+							<span className="desktop-text">{data.phone}</span>
+							<span className="mobile-text">{phoneIconText}</span>
+						</button>
+					</div>
+				)}
+				
+				{showDirections && data.google_maps_url && (
+					<div className="wp-block-button directions-button">
+						<button 
+							className={`wp-block-button__link wp-element-button directions-link size-${buttonSize}`}
+							title={__('Directions', 'localscoop')}
+							style={{
+								backgroundColor: directionsButtonColor
+							}}
+							data-mobile-text={directionsIconText}
+							data-url={data.google_maps_url}
+							onClick={() => window.open(data.google_maps_url, '_blank')}
+						>
+							<span className="desktop-text">{__('Directions', 'localscoop')}</span>
+							<span className="mobile-text">{directionsIconText}</span>
+						</button>
+					</div>
+				)}
+			</div>
+		);
+	};
+	
+	return (
+		<div {...blockProps}>
+			<InspectorControls>
+				{/* Simple Place ID Input */}
+				<PanelBody title={__('Business Configuration', 'localscoop')} initialOpen={true}>
+					<TextControl
+						label={__('Google Place ID', 'localscoop')}
+						value={placeId || ''}
+						onChange={(value) => setAttributes({ placeId: value })}
+						help={__('Enter the Google Place ID for your business. You can find this using the Google Place ID Finder online.', 'localscoop')}
+						placeholder="ChIJN1t_tDeuEmsRUsoyG83frY4"
+					/>
+					
+					{placeId && (
+						<Button 
+							variant="link" 
+							isDestructive
+							onClick={() => setAttributes({ placeId: '' })}
+							style={{ fontSize: '12px' }}
+						>
+							{__('Clear Place ID', 'localscoop')}
+						</Button>
+					)}
+				</PanelBody>
+				
+				{/* Display Toggle Options */}
+				<PanelBody title={__('Display Options', 'localscoop')} initialOpen={false}>
+					<ToggleControl
+						label={__('Show Open/Closed Status', 'localscoop')}
+						checked={showOpenStatus}
+						onChange={(value) => setAttributes({ showOpenStatus: value })}
+						help={__('Display whether the business is currently open or closed (button element)', 'localscoop')}
+					/>
+					
+					<ToggleControl
+						label={__('Show Phone Number', 'localscoop')}
+						checked={showPhone}
+						onChange={(value) => setAttributes({ showPhone: value })}
+						help={__('Display a clickable phone button that calls the number (button element)', 'localscoop')}
+					/>
+					
+					<ToggleControl
+						label={__('Show Directions', 'localscoop')}
+						checked={showDirections}
+						onChange={(value) => setAttributes({ showDirections: value })}
+						help={__('Display a directions button that opens Google Maps (button element)', 'localscoop')}
+					/>
+				</PanelBody>
+				
+				{/* Mobile Toolbar Text Customization */}
+				<PanelBody title={__('Mobile Toolbar Text', 'localscoop')} initialOpen={false}>
+					<TextControl
+						label={__('Phone Button Text (Mobile)', 'localscoop')}
+						value={phoneIconText}
+						onChange={(value) => setAttributes({ phoneIconText: value })}
+						help={__('Text displayed for phone button in mobile toolbar (default: CALL)', 'localscoop')}
+						placeholder="CALL"
+					/>
+					
+					<TextControl
+						label={__('Directions Button Text (Mobile)', 'localscoop')}
+						value={directionsIconText}
+						onChange={(value) => setAttributes({ directionsIconText: value })}
+						help={__('Text displayed for directions button in mobile toolbar (default: MAP)', 'localscoop')}
+						placeholder="MAP"
+					/>
+					
+					<RangeControl
+						label={__('Mobile Text Font Size', 'localscoop')}
+						value={mobileIconFontSize}
+						onChange={(value) => setAttributes({ mobileIconFontSize: value })}
+						min={10}
+						max={24}
+						step={1}
+						help={__('Adjust the font size of mobile toolbar text in pixels', 'localscoop')}
+					/>
+				</PanelBody>
+				
+				{/* Button Size & Border Radius */}
+				<PanelBody title={__('Button Size', 'localscoop')} initialOpen={false}>
+					<SelectControl
+						label={__('Open/Closed Button Size', 'localscoop')}
+						value={statusBadgeSize}
+						onChange={(value) => setAttributes({ statusBadgeSize: value })}
+						options={SIZE_OPTIONS}
+						help={__('Control the size of the open/closed status button', 'localscoop')}
+					/>
+					
+					<SelectControl
+						label={__('Phone & Directions Button Size', 'localscoop')}
+						value={buttonSize}
+						onChange={(value) => setAttributes({ buttonSize: value })}
+						options={SIZE_OPTIONS}
+						help={__('Control the size of phone and directions buttons', 'localscoop')}
+					/>
+					
+					<RangeControl
+						label={__('Border Radius (Desktop)', 'localscoop')}
+						value={borderRadius}
+						onChange={(value) => setAttributes({ borderRadius: value })}
+						min={0}
+						max={50}
+						step={1}
+						help={__('Adjust the corner roundness in pixels (desktop only, all buttons)', 'localscoop')}
+					/>
+				</PanelBody>
+				
+				{/* Button Typography */}
+				<PanelBody title={__('Button Typography (Desktop)', 'localscoop')} initialOpen={false}>
+					<p className="components-base-control__help">
+						{__('These settings affect all buttons on desktop.', 'localscoop')}
+					</p>
+					
+					<RangeControl
+						label={__('Font Size', 'localscoop')}
+						value={buttonFontSize}
+						onChange={(value) => setAttributes({ buttonFontSize: value })}
+						min={10}
+						max={32}
+						step={1}
+						help={__('Button text font size in pixels', 'localscoop')}
+					/>
+					
+					<SelectControl
+						label={__('Font Weight', 'localscoop')}
+						value={buttonFontWeight}
+						onChange={(value) => setAttributes({ buttonFontWeight: value })}
+						options={FONT_WEIGHT_OPTIONS}
+						help={__('Button text font weight', 'localscoop')}
+					/>
+					
+					<RangeControl
+						label={__('Letter Spacing', 'localscoop')}
+						value={buttonLetterSpacing}
+						onChange={(value) => setAttributes({ buttonLetterSpacing: value })}
+						min={-2}
+						max={10}
+						step={0.1}
+						help={__('Space between letters in pixels', 'localscoop')}
+					/>
+					
+					<SelectControl
+						label={__('Text Transform', 'localscoop')}
+						value={buttonTextTransform}
+						onChange={(value) => setAttributes({ buttonTextTransform: value })}
+						options={[
+							{ label: __('None', 'localscoop'), value: 'none' },
+							{ label: __('Uppercase', 'localscoop'), value: 'uppercase' },
+							{ label: __('Lowercase', 'localscoop'), value: 'lowercase' },
+							{ label: __('Capitalize', 'localscoop'), value: 'capitalize' }
+						]}
+						help={__('Text transformation style', 'localscoop')}
+					/>
+				</PanelBody>
+				
+				{/* Button Spacing */}
+				<PanelBody title={__('Button Spacing (Desktop)', 'localscoop')} initialOpen={false}>
+					<p className="components-base-control__help">
+						{__('These settings control spacing for all buttons on desktop.', 'localscoop')}
+					</p>
+					
+					<RangeControl
+						label={__('Top Padding', 'localscoop')}
+						value={buttonPaddingTop}
+						onChange={(value) => setAttributes({ buttonPaddingTop: value })}
+						min={0}
+						max={50}
+						step={1}
+						help={__('Top padding inside buttons', 'localscoop')}
+					/>
+					
+					<RangeControl
+						label={__('Right Padding', 'localscoop')}
+						value={buttonPaddingRight}
+						onChange={(value) => setAttributes({ buttonPaddingRight: value })}
+						min={0}
+						max={50}
+						step={1}
+						help={__('Right padding inside buttons', 'localscoop')}
+					/>
+					
+					<RangeControl
+						label={__('Bottom Padding', 'localscoop')}
+						value={buttonPaddingBottom}
+						onChange={(value) => setAttributes({ buttonPaddingBottom: value })}
+						min={0}
+						max={50}
+						step={1}
+						help={__('Bottom padding inside buttons', 'localscoop')}
+					/>
+					
+					<RangeControl
+						label={__('Left Padding', 'localscoop')}
+						value={buttonPaddingLeft}
+						onChange={(value) => setAttributes({ buttonPaddingLeft: value })}
+						min={0}
+						max={50}
+						step={1}
+						help={__('Left padding inside buttons', 'localscoop')}
+					/>
+					
+					<RangeControl
+						label={__('Button Margin', 'localscoop')}
+						value={buttonMargin}
+						onChange={(value) => setAttributes({ buttonMargin: value })}
+						min={0}
+						max={30}
+						step={1}
+						help={__('Space around all buttons', 'localscoop')}
+					/>
+				</PanelBody>
+				
+				{/* Button Border */}
+				<PanelBody title={__('Button Border (Desktop)', 'localscoop')} initialOpen={false}>
+					<p className="components-base-control__help">
+						{__('Border settings for all buttons on desktop.', 'localscoop')}
+					</p>
+					
+					<RangeControl
+						label={__('Border Width', 'localscoop')}
+						value={buttonBorderWidth}
+						onChange={(value) => setAttributes({ buttonBorderWidth: value })}
+						min={0}
+						max={10}
+						step={1}
+						help={__('Border thickness in pixels', 'localscoop')}
+					/>
+					
+					<SelectControl
+						label={__('Border Style', 'localscoop')}
+						value={buttonBorderStyle}
+						onChange={(value) => setAttributes({ buttonBorderStyle: value })}
+						options={BORDER_STYLE_OPTIONS}
+						help={__('Border line style', 'localscoop')}
+					/>
+				</PanelBody>
+				
+				{/* Status Button Colors */}
+				<PanelColorSettings
+					title={__('Status & Background Colors', 'localscoop')}
+					initialOpen={false}
+					colorSettings={[
+						{
+							value: backgroundColor,
+							onChange: (color) => setAttributes({ backgroundColor: color }),
+							label: __('Block Background Color', 'localscoop'),
+						},
+						{
+							value: openStatusColor,
+							onChange: (color) => setAttributes({ openStatusColor: color }),
+							label: __('Open Status Button Color', 'localscoop'),
+						},
+						{
+							value: closedStatusColor,
+							onChange: (color) => setAttributes({ closedStatusColor: color }),
+							label: __('Closed Status Button Color', 'localscoop'),
+						}
+					]}
+				/>
+				
+				{/* Button Colors */}
+				<PanelColorSettings
+					title={__('Button Colors (Desktop)', 'localscoop')}
+					initialOpen={false}
+					colorSettings={[
+						{
+							value: buttonTextColor,
+							onChange: (color) => setAttributes({ buttonTextColor: color }),
+							label: __('Button Text Color', 'localscoop'),
+						},
+						{
+							value: buttonBorderColor,
+							onChange: (color) => setAttributes({ buttonBorderColor: color }),
+							label: __('Button Border Color', 'localscoop'),
+						},
+						{
+							value: buttonHoverColor,
+							onChange: (color) => setAttributes({ buttonHoverColor: color }),
+							label: __('Button Hover Background', 'localscoop'),
+						},
+						{
+							value: buttonHoverTextColor,
+							onChange: (color) => setAttributes({ buttonHoverTextColor: color }),
+							label: __('Button Hover Text Color', 'localscoop'),
+						}
+					]}
+				/>
+				
+				{/* Mobile Toolbar Colors */}
+				<PanelColorSettings
+					title={__('Mobile Toolbar Colors', 'localscoop')}
+					initialOpen={false}
+					colorSettings={[
+						{
+							value: mobileBarBackground,
+							onChange: (color) => setAttributes({ mobileBarBackground: color }),
+							label: __('Mobile Toolbar Background', 'localscoop'),
+						},
+						{
+							value: phoneButtonColor,
+							onChange: (color) => setAttributes({ phoneButtonColor: color }),
+							label: __('Phone Button Color (Mobile)', 'localscoop'),
+						},
+						{
+							value: directionsButtonColor,
+							onChange: (color) => setAttributes({ directionsButtonColor: color }),
+							label: __('Directions Button Color (Mobile)', 'localscoop'),
+						}
+					]}
+				/>
+			</InspectorControls>
+			
+			{error && (
+				<Notice status="error" isDismissible={false} style={{ marginBottom: '16px' }}>
+					<strong>Error:</strong> {error}
+				</Notice>
+			)}
+			
+			{loading && (
+				<div style={{ textAlign: 'center', padding: '20px' }}>
+					<Spinner />
+					<p>{__('Loading business data...', 'localscoop')}</p>
+				</div>
+			)}
+			
+			{/* ALWAYS show the LocalScoop toolbar - either with real data or sample data */}
+			{placeData && !loading && renderLocalScoopContent(placeData)}
+		</div>
+	);
+}]]></content>
+  </file>
+  <file path="src/save.js">
+    <description>This file contains the save function for the block which is responsible for creating the static result of rendering the block on the client to display the saved result on the front end.</description>
+    <content><![CDATA[
+  // This block is rendered dynamically on the server side
+// so no save function is needed
+export default function save() {
+	return null;
+}
+	]]></content>
+  </file>
+  <file path="src/style.scss">
+    <description>This file contains styles for the block in the front end.</description>
+    <content><![CDATA[/**
+ * LocalScoop Block Frontend Styles
+ * Consistent frontend and backend mobile display using CSS-only approach
+ */
+
+.wp-block-telex-block-localscoop {
+	// Container for all buttons using WordPress core buttons class
+	.wp-block-buttons.shop-actions {
+		display: flex;
+		align-items: center;
+		gap: calc(var(--button-margin, 8px) / 2);
+		justify-content: flex-start;
+		flex-wrap: wrap;
+		
+		// Ensure buttons inherit theme styles properly
+		.wp-block-button {
+			margin: 0;
+			margin: var(--button-margin, 8px);
+			
+			// All buttons with desktop customization
+			.wp-block-button__link {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				text-decoration: none;
+				white-space: nowrap;
+				transition: all 0.2s ease;
+				cursor: pointer;
+				text-align: center;
+				position: relative;
+				border: none;
+				background: none;
+				
+				// Apply desktop customizations
+				border-width: var(--button-border-width, 0);
+				border-style: var(--button-border-style, solid);
+				border-color: var(--button-border-color, transparent);
+				color: var(--button-text-color, inherit) !important;
+				font-size: var(--button-font-size, 16px);
+				font-weight: var(--button-font-weight, normal);
+				letter-spacing: var(--button-letter-spacing, 0);
+				text-transform: var(--button-text-transform, none);
+				padding: var(--button-padding, 12px 24px);
+				border-radius: var(--button-border-radius, 8px);
+				
+				// Hover states
+				&:hover {
+					background-color: var(--button-hover-color, inherit) !important;
+					color: var(--button-hover-text-color, inherit) !important;
+					transform: translateY(-1px);
+					box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+				}
+				
+				&:active {
+					transform: translateY(0);
+					box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+				}
+				
+				// Desktop and mobile text spans
+				.desktop-text,
+				.mobile-text {
+					display: inline;
+					color: inherit;
+				}
+				
+				// Size variants with custom padding override
+				&.size-small {
+					font-size: var(--button-font-size, 0.875rem);
+					padding: var(--button-padding, 0.375rem 0.75rem);
+					min-height: 40px;
+				}
+				
+				&.size-medium {
+					font-size: var(--button-font-size, 1rem);
+					padding: var(--button-padding, 0.5rem 1rem);
+					min-height: 44px;
+				}
+				
+				&.size-large {
+					font-size: var(--button-font-size, 1.125rem);
+					padding: var(--button-padding, 0.75rem 1.5rem);
+					min-height: 52px;
+				}
+				
+				&.size-xlarge {
+					font-size: var(--button-font-size, 1.25rem);
+					padding: var(--button-padding, 1rem 2rem);
+					min-height: 60px;
+				}
+			}
+		}
+	}
+	
+	/**
+	 * MOBILE TOOLBAR - CSS-only text switching with fixed white text
+	 */
+	@media screen and (max-width: 900px) {
+		// Add body padding
+		body {
+			padding-bottom: 70px !important;
+		}
+		
+		.wp-block-buttons.shop-actions {
+			// Fixed positioning
+			position: fixed !important;
+			bottom: 0 !important;
+			left: 0 !important;
+			right: 0 !important;
+			width: 100vw !important;
+			z-index: 999 !important;
+			top: auto !important;
+			transform: none !important;
+			margin: 0 !important;
+			
+			// Background and styling
+			background-color: var(--mobile-bar-bg, rgba(255, 255, 255, 0.95)) !important;
+			border: none !important;
+			border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+			box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1) !important;
+			backdrop-filter: blur(10px) !important;
+			box-sizing: border-box !important;
+			
+			// Layout - full width buttons
+			display: flex !important;
+			flex-direction: row !important;
+			align-items: stretch !important;
+			justify-content: stretch !important;
+			gap: 0 !important;
+			flex-wrap: nowrap !important;
+			overflow: hidden !important;
+			padding: 0 !important;
+			height: 64px !important;
+			min-height: 64px !important;
+			max-height: 64px !important;
+			
+			// Button containers - equal width
+			.wp-block-button {
+				flex: 1 1 0 !important;
+				min-width: 0 !important;
+				max-width: none !important;
+				margin: 0 !important;
+				padding: 0 !important;
+				box-sizing: border-box !important;
+				height: 100% !important;
+				display: flex !important;
+				
+				// Borders between buttons
+				border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
+				border-left: none !important;
+				border-top: none !important;
+				border-bottom: none !important;
+				
+				&:last-child {
+					border-right: none !important;
+				}
+				
+				&:first-child {
+					border-left: none !important;
+				}
+				
+				// Button elements - mobile toolbar styling with FORCED WHITE TEXT
+				.wp-block-button__link {
+					width: 100% !important;
+					height: 100% !important;
+					min-height: 64px !important;
+					max-height: 64px !important;
+					flex: 1 !important;
+					
+					// Reset all desktop styling
+					padding: 0 !important;
+					margin: 0 !important;
+					border: none !important;
+					border-radius: 0 !important;
+					outline: none !important;
+					box-sizing: border-box !important;
+					
+					// Layout
+					display: flex !important;
+					align-items: center !important;
+					justify-content: center !important;
+					position: relative !important;
+					overflow: hidden !important;
+					
+					// FORCE WHITE TEXT - override everything
+					color: #FFFFFF !important;
+					font-weight: 700 !important;
+					text-decoration: none !important;
+					text-transform: uppercase !important;
+					letter-spacing: 0.5px !important;
+					font-size: var(--mobile-text-font-size, 14px) !important;
+					line-height: 1 !important;
+					opacity: 1 !important;
+					
+					// Hide desktop text, show mobile text with WHITE color
+					.desktop-text {
+						display: none !important;
+					}
+					
+					.mobile-text {
+						display: inline !important;
+						color: #FFFFFF !important;
+						font-weight: 700 !important;
+						font-size: inherit !important;
+						text-transform: inherit !important;
+						letter-spacing: inherit !important;
+					}
+					
+					// Interaction states - maintain white text
+					transition: all 0.2s ease !important;
+					
+					&:hover {
+						opacity: 0.85 !important;
+						color: #FFFFFF !important;
+						
+						.mobile-text {
+							color: #FFFFFF !important;
+						}
+					}
+					
+					&:active {
+						transform: scale(0.98) !important;
+						opacity: 0.7 !important;
+						color: #FFFFFF !important;
+						
+						.mobile-text {
+							color: #FFFFFF !important;
+						}
+					}
+				}
+			}
+			
+			// Phone button - colors with white text
+			.phone-button {
+				.wp-block-button__link {
+					background-color: var(--phone-button-bg, #007cba) !important;
+					color: #FFFFFF !important;
+					
+					.mobile-text {
+						color: #FFFFFF !important;
+					}
+					
+					&:hover, &:focus {
+						color: #FFFFFF !important;
+						
+						.mobile-text {
+							color: #FFFFFF !important;
+						}
+					}
+					
+					&:active {
+						background-color: color-mix(in srgb, var(--phone-button-bg, #007cba) 75%, black) !important;
+						color: #FFFFFF !important;
+						
+						.mobile-text {
+							color: #FFFFFF !important;
+						}
+					}
+				}
+			}
+			
+			// Directions button - colors with white text
+			.directions-button {
+				.wp-block-button__link {
+					background-color: var(--directions-button-bg, #10b981) !important;
+					color: #FFFFFF !important;
+					
+					.mobile-text {
+						color: #FFFFFF !important;
+					}
+					
+					&:hover, &:focus {
+						color: #FFFFFF !important;
+						
+						.mobile-text {
+							color: #FFFFFF !important;
+						}
+					}
+					
+					&:active {
+						background-color: color-mix(in srgb, var(--directions-button-bg, #10b981) 75%, black) !important;
+						color: #FFFFFF !important;
+						
+						.mobile-text {
+							color: #FFFFFF !important;
+						}
+					}
+				}
+			}
+			
+			// Status button - colors with white text (disabled, but styled)
+			.open-status-button {
+				button.wp-block-button__link {
+					pointer-events: none !important;
+					cursor: default !important;
+					font-size: var(--mobile-text-font-size, 14px) !important;
+					color: #FFFFFF !important;
+					text-transform: uppercase !important;
+					letter-spacing: 0.5px !important;
+					font-weight: 700 !important;
+					line-height: 1 !important;
+					opacity: 1 !important;
+					
+					&.open {
+						background-color: var(--open-status-color, #10b981) !important;
+						color: #FFFFFF !important;
+					}
+					
+					&.closed {
+						background-color: var(--closed-status-color, #ef4444) !important;
+						color: #FFFFFF !important;
+					}
+				}
+			}
+		}
+		
+		// Smaller mobile screens
+		@media screen and (max-width: 480px) {
+			body {
+				padding-bottom: 60px !important;
+			}
+			
+			.wp-block-buttons.shop-actions {
+				height: 56px !important;
+				min-height: 56px !important;
+				max-height: 56px !important;
+				
+				.wp-block-button .wp-block-button__link {
+					height: 100% !important;
+					min-height: 56px !important;
+					max-height: 56px !important;
+					font-size: calc(var(--mobile-text-font-size, 14px) - 2px) !important;
+					color: #FFFFFF !important;
+					
+					.mobile-text {
+						color: #FFFFFF !important;
+					}
+				}
+				
+				.open-status-button button.wp-block-button__link {
+					font-size: calc(var(--mobile-text-font-size, 14px) - 2px) !important;
+					color: #FFFFFF !important;
+				}
+			}
+		}
+		
+		@media screen and (max-width: 360px) {
+			body {
+				padding-bottom: 55px !important;
+			}
+			
+			.wp-block-buttons.shop-actions {
+				height: 52px !important;
+				min-height: 52px !important;
+				max-height: 52px !important;
+				
+				.wp-block-button .wp-block-button__link {
+					height: 100% !important;
+					min-height: 52px !important;
+					max-height: 52px !important;
+					font-size: calc(var(--mobile-text-font-size, 14px) - 3px) !important;
+					color: #FFFFFF !important;
+					
+					.mobile-text {
+						color: #FFFFFF !important;
+					}
+				}
+				
+				.open-status-button button.wp-block-button__link {
+					font-size: calc(var(--mobile-text-font-size, 14px) - 3px) !important;
+					color: #FFFFFF !important;
+				}
+			}
+		}
+	}
+	
+	// Desktop reset - show desktop text, hide mobile text
+	@media screen and (min-width: 901px) {
+		body {
+			padding-bottom: 0 !important;
+		}
+		
+		.wp-block-buttons.shop-actions {
+			// Reset all mobile positioning
+			position: static !important;
+			bottom: auto !important;
+			left: auto !important;
+			right: auto !important;
+			width: auto !important;
+			height: auto !important;
+			min-height: auto !important;
+			max-height: none !important;
+			z-index: auto !important;
+			
+			// Reset background and borders
+			background-color: transparent !important;
+			border: none !important;
+			box-shadow: none !important;
+			backdrop-filter: none !important;
+			
+			// Reset layout
+			gap: calc(var(--button-margin, 8px) / 2) !important;
+			flex-wrap: wrap !important;
+			justify-content: flex-start !important;
+			padding: 0 !important;
+			
+			.wp-block-button {
+				// Reset button container
+				flex: none !important;
+				width: auto !important;
+				height: auto !important;
+				max-width: none !important;
+				border: none !important;
+				margin: var(--button-margin, 8px) !important;
+				
+				.wp-block-button__link {
+					// Reset all mobile button styles - let custom styles take over
+					width: auto !important;
+					height: auto !important;
+					min-height: auto !important;
+					max-height: none !important;
+					
+					// Show desktop text, hide mobile text
+					.desktop-text {
+						display: inline !important;
+					}
+					
+					.mobile-text {
+						display: none !important;
+					}
+				}
+			}
+		}
+	}
+}]]></content>
+  </file>
+  <file path="src/editor.scss">
+    <description>This file contains styles for the block in the editor.</description>
+    <content><![CDATA[/**
+ * LocalScoop Block Editor Styles
+ * Minimal editor-specific styling with debug panel support and mobile preview
+ */
+
+.wp-block-telex-block-localscoop {
+	// Basic editor selection indicators
+	border: 1px solid transparent;
+	transition: border-color 0.2s ease;
+	
+	&:hover {
+		border-color: #007cba;
+	}
+	
+	&.is-selected {
+		border-color: #007cba;
+		box-shadow: 0 0 0 1px #007cba;
+	}
+	
+	// Search results in inspector
+	.search-results {
+		max-height: 200px;
+		overflow-y: auto;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		padding: 8px;
+		
+		.components-card {
+			&:not(:last-child) {
+				margin-bottom: 8px;
+			}
+		}
+	}
+	
+	// Debug panel styling
+	.debug-panel {
+		font-family: 'SFMono-Regular', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+		font-size: 11px;
+		line-height: 1.4;
+		background: #f8f9fa;
+		border: 1px solid #e1e3e6;
+		border-radius: 4px;
+		padding: 8px;
+		max-height: 200px;
+		overflow-y: auto;
+		
+		.debug-entry {
+			margin-bottom: 8px;
+			padding-bottom: 6px;
+			border-bottom: 1px solid #eee;
+			
+			&:last-child {
+				border-bottom: none;
+				margin-bottom: 0;
+			}
+			
+			.debug-timestamp {
+				color: #666;
+				font-size: 10px;
+				margin-bottom: 2px;
+			}
+			
+			.debug-message {
+				font-weight: 600;
+				color: #333;
+				margin-bottom: 2px;
+			}
+			
+			.debug-data {
+				color: #0073aa;
+				font-size: 10px;
+				white-space: pre-wrap;
+				word-break: break-all;
+			}
+		}
+	}
+	
+	// Preview in editor should look like frontend but indicate it's not interactive
+	.localscoop-preview {
+		.wp-block-buttons.shop-actions {
+			.wp-block-button {
+				.wp-block-button__link {
+					pointer-events: none;
+					opacity: 0.9;
+					position: relative;
+					
+					&::after {
+						content: '(Preview - Theme Styled)';
+						position: absolute;
+						top: 100%;
+						left: 50%;
+						transform: translateX(-50%);
+						font-size: 10px;
+						color: #666;
+						white-space: nowrap;
+						margin-top: 2px;
+						font-weight: normal;
+					}
+				}
+			}
+		}
+	}
+	
+	// Loading and error states
+	.components-notice {
+		margin-bottom: 16px;
+		
+		// Enhanced error notice styling
+		&.is-error {
+			background: #f8d7da;
+			border-color: #f5c6cb;
+			color: #721c24;
+			
+			strong {
+				color: #721c24;
+			}
+			
+			small {
+				color: #856404;
+				font-style: italic;
+			}
+		}
+	}
+	
+	// Responsive editor adjustments
+	@media (max-width: 782px) {
+		.localscoop-preview .wp-block-buttons.shop-actions .wp-block-button .wp-block-button__link::after {
+			font-size: 8px;
+		}
+		
+		.debug-panel {
+			font-size: 10px;
+			max-height: 150px;
+		}
+	}
+	
+	// Very small editor screens
+	@media (max-width: 600px) {
+		.localscoop-preview .wp-block-buttons.shop-actions {
+			.wp-block-button {
+				flex: 1;
+				min-width: 0;
+				
+				.wp-block-button__link {
+					padding: 0.5rem 0.25rem;
+					min-height: 48px;
+				}
+			}
+		}
+	}
+	
+	// High contrast mode support in editor
+	@media (prefers-contrast: high) {
+		.debug-panel {
+			border-width: 2px;
+			background: white;
+		}
+		
+		.components-notice {
+			border-width: 2px;
+		}
+	}
+}]]></content>
+  </file>
+  <file path="src/view.js">
+    <description>This file contains the view function for the block which is responsible for rendering interactive behaviors of the block on the front end. Ideally using the WordPress interactivity API.</description>
+    <content><![CDATA[/**
+ * LocalScoop Block Frontend JavaScript  
+ * Simple initialization - CSS handles the mobile text switching
+ */
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+	console.log('LocalScoop mobile toolbar loaded - CSS handles text switching!');
+});
+
+// Initialize immediately if DOM is already ready
+if (document.readyState !== 'loading') {
+	console.log('LocalScoop mobile toolbar loaded - CSS handles text switching!');
+}]]></content>
+  </file>
+  <file path="src/render.php">
+    <description>This file contains the render callback function for the block, which is responsible for rendering the block content on the front end. A render function should exist only if the block is dynamic.</description>
+    <content><![CDATA[<?php
+/**
+ * LocalScoop Block Dynamic Rendering
+ * Always displays the toolbar regardless of API key configuration
+ * All output is properly escaped for security
+ *
+ * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
+ */
+
+// Always show the LocalScoop toolbar - use real data if available, sample data if not
+$place_data = array(
+    'name' => 'Local Business',
+    'phone' => '(555) 123-4567',
+    'is_open_now' => true,
+    'google_maps_url' => 'https://maps.google.com'
+);
+
+// Only try to get real data if we have both place ID and API key
+$place_id = isset( $attributes['placeId'] ) ? sanitize_text_field( $attributes['placeId'] ) : '';
+$api_key = telex_localscoop_get_api_key();
+
+if ( ! empty( $place_id ) && ! empty( $api_key ) ) {
+    $real_data = telex_localscoop_get_place_details( $place_id, $api_key );
+    
+    // Only use real data if successful and is array, otherwise keep sample data
+    if ( ! is_wp_error( $real_data ) && is_array( $real_data ) ) {
+        $place_data = $real_data;
+    }
+}
+
+// Get and sanitize all attributes for styling
+$show_open_status = isset( $attributes['showOpenStatus'] ) ? (bool) $attributes['showOpenStatus'] : true;
+$show_phone = isset( $attributes['showPhone'] ) ? (bool) $attributes['showPhone'] : true;
+$show_directions = isset( $attributes['showDirections'] ) ? (bool) $attributes['showDirections'] : true;
+
+// Sanitize color values
+$open_status_color = isset( $attributes['openStatusColor'] ) ? sanitize_hex_color( $attributes['openStatusColor'] ) : '';
+$closed_status_color = isset( $attributes['closedStatusColor'] ) ? sanitize_hex_color( $attributes['closedStatusColor'] ) : '';
+$background_color = isset( $attributes['backgroundColor'] ) ? sanitize_hex_color( $attributes['backgroundColor'] ) : '';
+$mobile_bar_background = isset( $attributes['mobileBarBackground'] ) ? wp_strip_all_tags( $attributes['mobileBarBackground'] ) : '';
+$phone_button_color = isset( $attributes['phoneButtonColor'] ) ? sanitize_hex_color( $attributes['phoneButtonColor'] ) : '';
+$directions_button_color = isset( $attributes['directionsButtonColor'] ) ? sanitize_hex_color( $attributes['directionsButtonColor'] ) : '';
+
+// Sanitize text values
+$phone_text = isset( $attributes['phoneIconText'] ) ? sanitize_text_field( $attributes['phoneIconText'] ) : 'CALL';
+$directions_text = isset( $attributes['directionsIconText'] ) ? sanitize_text_field( $attributes['directionsIconText'] ) : 'MAP';
+
+// Sanitize numeric values
+$mobile_text_font_size = isset( $attributes['mobileIconFontSize'] ) ? absint( $attributes['mobileIconFontSize'] ) : 14;
+$border_radius = isset( $attributes['borderRadius'] ) ? absint( $attributes['borderRadius'] ) : 8;
+$padding = isset( $attributes['padding'] ) ? absint( $attributes['padding'] ) : 16;
+
+// Sanitize select values against allowed options
+$allowed_sizes = array( 'small', 'medium', 'large', 'xlarge' );
+$status_badge_size = isset( $attributes['statusBadgeSize'] ) && in_array( $attributes['statusBadgeSize'], $allowed_sizes, true ) ? $attributes['statusBadgeSize'] : 'medium';
+$button_size = isset( $attributes['buttonSize'] ) && in_array( $attributes['buttonSize'], $allowed_sizes, true ) ? $attributes['buttonSize'] : 'medium';
+
+// Button customization attributes (for all buttons) - sanitized
+$button_border_width = isset( $attributes['buttonBorderWidth'] ) ? absint( $attributes['buttonBorderWidth'] ) : 0;
+
+$allowed_border_styles = array( 'none', 'solid', 'dashed', 'dotted' );
+$button_border_style = isset( $attributes['buttonBorderStyle'] ) && in_array( $attributes['buttonBorderStyle'], $allowed_border_styles, true ) ? $attributes['buttonBorderStyle'] : 'solid';
+
+$button_border_color = isset( $attributes['buttonBorderColor'] ) ? sanitize_hex_color( $attributes['buttonBorderColor'] ) : '';
+$button_text_color = isset( $attributes['buttonTextColor'] ) ? sanitize_hex_color( $attributes['buttonTextColor'] ) : '';
+$button_hover_color = isset( $attributes['buttonHoverColor'] ) ? sanitize_hex_color( $attributes['buttonHoverColor'] ) : '';
+$button_hover_text_color = isset( $attributes['buttonHoverTextColor'] ) ? sanitize_hex_color( $attributes['buttonHoverTextColor'] ) : '';
+$button_font_size = isset( $attributes['buttonFontSize'] ) ? absint( $attributes['buttonFontSize'] ) : 16;
+
+$allowed_font_weights = array( 'normal', 'bold', 'bolder', 'lighter', '100', '200', '300', '400', '500', '600', '700', '800', '900' );
+$button_font_weight = isset( $attributes['buttonFontWeight'] ) && in_array( $attributes['buttonFontWeight'], $allowed_font_weights, true ) ? $attributes['buttonFontWeight'] : 'normal';
+
+$button_letter_spacing = isset( $attributes['buttonLetterSpacing'] ) ? floatval( $attributes['buttonLetterSpacing'] ) : 0;
+
+$allowed_text_transforms = array( 'none', 'uppercase', 'lowercase', 'capitalize' );
+$button_text_transform = isset( $attributes['buttonTextTransform'] ) && in_array( $attributes['buttonTextTransform'], $allowed_text_transforms, true ) ? $attributes['buttonTextTransform'] : 'none';
+
+$button_padding_top = isset( $attributes['buttonPaddingTop'] ) ? absint( $attributes['buttonPaddingTop'] ) : 12;
+$button_padding_right = isset( $attributes['buttonPaddingRight'] ) ? absint( $attributes['buttonPaddingRight'] ) : 24;
+$button_padding_bottom = isset( $attributes['buttonPaddingBottom'] ) ? absint( $attributes['buttonPaddingBottom'] ) : 12;
+$button_padding_left = isset( $attributes['buttonPaddingLeft'] ) ? absint( $attributes['buttonPaddingLeft'] ) : 24;
+$button_margin = isset( $attributes['buttonMargin'] ) ? absint( $attributes['buttonMargin'] ) : 8;
+
+// Create inline styles array
+$inline_styles = array();
+
+if ( $background_color ) {
+    $inline_styles[] = 'background-color: ' . esc_attr( $background_color );
+}
+
+// Add ALL CSS custom properties for complete customization - properly escaped
+if ( $open_status_color ) {
+    $inline_styles[] = '--open-status-color: ' . esc_attr( $open_status_color );
+}
+if ( $closed_status_color ) {
+    $inline_styles[] = '--closed-status-color: ' . esc_attr( $closed_status_color );
+}
+$inline_styles[] = '--status-badge-size: ' . esc_attr( $status_badge_size );
+$inline_styles[] = '--button-size: ' . esc_attr( $button_size );
+
+// Mobile toolbar CSS custom properties
+if ( $mobile_bar_background ) {
+    $inline_styles[] = '--mobile-bar-bg: ' . esc_attr( $mobile_bar_background );
+}
+if ( $phone_button_color ) {
+    $inline_styles[] = '--phone-button-bg: ' . esc_attr( $phone_button_color );
+}
+if ( $directions_button_color ) {
+    $inline_styles[] = '--directions-button-bg: ' . esc_attr( $directions_button_color );
+}
+$inline_styles[] = '--mobile-text-font-size: ' . esc_attr( $mobile_text_font_size ) . 'px';
+
+// Button Styling Variables (for all buttons) - properly escaped
+if ( $button_border_width > 0 ) {
+    $inline_styles[] = '--button-border-width: ' . esc_attr( $button_border_width ) . 'px';
+}
+if ( $button_border_style ) {
+    $inline_styles[] = '--button-border-style: ' . esc_attr( $button_border_style );
+}
+if ( $button_border_color ) {
+    $inline_styles[] = '--button-border-color: ' . esc_attr( $button_border_color );
+}
+if ( $button_text_color ) {
+    $inline_styles[] = '--button-text-color: ' . esc_attr( $button_text_color );
+}
+if ( $button_hover_color ) {
+    $inline_styles[] = '--button-hover-color: ' . esc_attr( $button_hover_color );
+}
+if ( $button_hover_text_color ) {
+    $inline_styles[] = '--button-hover-text-color: ' . esc_attr( $button_hover_text_color );
+}
+if ( $button_font_size ) {
+    $inline_styles[] = '--button-font-size: ' . esc_attr( $button_font_size ) . 'px';
+}
+if ( $button_font_weight ) {
+    $inline_styles[] = '--button-font-weight: ' . esc_attr( $button_font_weight );
+}
+if ( $button_letter_spacing != 0 ) {
+    $inline_styles[] = '--button-letter-spacing: ' . esc_attr( $button_letter_spacing ) . 'px';
+}
+if ( $button_text_transform && $button_text_transform !== 'none' ) {
+    $inline_styles[] = '--button-text-transform: ' . esc_attr( $button_text_transform );
+}
+
+// Button padding as single property - properly sanitized
+$button_padding = esc_attr( $button_padding_top ) . 'px ' . esc_attr( $button_padding_right ) . 'px ' . esc_attr( $button_padding_bottom ) . 'px ' . esc_attr( $button_padding_left ) . 'px';
+$inline_styles[] = '--button-padding: ' . $button_padding;
+
+if ( $button_margin ) {
+    $inline_styles[] = '--button-margin: ' . esc_attr( $button_margin ) . 'px';
+}
+if ( $border_radius ) {
+    $inline_styles[] = '--button-border-radius: ' . esc_attr( $border_radius ) . 'px';
+}
+
+$wrapper_attributes = get_block_wrapper_attributes();
+if ( ! empty( $inline_styles ) ) {
+    $style_attr = ' style="' . esc_attr( implode( '; ', $inline_styles ) ) . '"';
+    $wrapper_attributes = str_replace( '>', $style_attr . '>', $wrapper_attributes );
+}
+?>
+<div <?php echo $wrapper_attributes; ?>>
+    <div class="wp-block-buttons shop-actions">
+        <?php if ( $show_open_status && isset( $place_data['is_open_now'] ) ): ?>
+        <div class="wp-block-button open-status-button">
+            <button class="wp-block-button__link wp-element-button <?php echo $place_data['is_open_now'] ? 'open' : 'closed'; ?> size-<?php echo esc_attr( $status_badge_size ); ?>" 
+                    style="background-color: <?php echo esc_attr( $place_data['is_open_now'] ? ( $open_status_color ?: '#10b981' ) : ( $closed_status_color ?: '#ef4444' ) ); ?>;"
+                    disabled>
+                <?php echo $place_data['is_open_now'] ? esc_html__( 'Open', 'localscoop' ) : esc_html__( 'Closed', 'localscoop' ); ?>
+            </button>
+        </div>
+        <?php endif; ?>
+        
+        <?php if ( $show_phone && ! empty( $place_data['phone'] ) ): ?>
+        <div class="wp-block-button phone-button">
+            <button class="wp-block-button__link wp-element-button phone-link size-<?php echo esc_attr( $button_size ); ?>"
+                    title="<?php printf( esc_attr__( 'Call %s', 'localscoop' ), esc_attr( $place_data['phone'] ) ); ?>"
+                    aria-label="<?php printf( esc_attr__( 'Call %s', 'localscoop' ), esc_attr( $place_data['phone'] ) ); ?>"
+                    style="background-color: <?php echo esc_attr( $phone_button_color ?: '#007cba' ); ?>;"
+                    data-mobile-text="<?php echo esc_attr( $phone_text ); ?>"
+                    data-tel="<?php echo esc_attr( $place_data['phone'] ); ?>"
+                    onclick="window.open('<?php echo esc_js( 'tel:' . $place_data['phone'] ); ?>', '_self');">
+                <span class="desktop-text"><?php echo esc_html( $place_data['phone'] ); ?></span>
+                <span class="mobile-text"><?php echo esc_html( $phone_text ); ?></span>
+            </button>
+        </div>
+        <?php endif; ?>
+        
+        <?php if ( $show_directions && ! empty( $place_data['google_maps_url'] ) ): ?>
+        <div class="wp-block-button directions-button">
+            <button class="wp-block-button__link wp-element-button directions-link size-<?php echo esc_attr( $button_size ); ?>" 
+                    title="<?php esc_attr_e( 'Get directions', 'localscoop' ); ?>"
+                    aria-label="<?php esc_attr_e( 'Get directions to business', 'localscoop' ); ?>"
+                    style="background-color: <?php echo esc_attr( $directions_button_color ?: '#10b981' ); ?>;"
+                    data-mobile-text="<?php echo esc_attr( $directions_text ); ?>"
+                    data-url="<?php echo esc_url( $place_data['google_maps_url'] ); ?>"
+                    onclick="window.open('<?php echo esc_js( esc_url( $place_data['google_maps_url'] ) ); ?>', '_blank');">
+                <span class="desktop-text"><?php esc_html_e( 'Directions', 'localscoop' ); ?></span>
+                <span class="mobile-text"><?php echo esc_html( $directions_text ); ?></span>
+            </button>
+        </div>
+        <?php endif; ?>
+    </div>
+</div>]]></content>
+  </file>
+  <file path="package.json">
+    <description>The AI assistant should only edit 'user_provided_block_name_slug', 'description' and resolve 'isDynamicVariant' in this file and ALWAYS INCLUDE IT. This file includes the necessary scripts for building, formatting, and linting the block code. Dependencies are managed at the workspace level via pnpm.</description>
+    <content><![CDATA[{
+	"name": "localscoop",
+	"version": "0.1.0",
+	"description": "Local business information block.",
+	"author": "iconick",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start"
+	},
+    "devDependencies": {
+        "@wordpress/scripts": "^30.15.0"
+	}
+}]]></content>
+  </file>
+  <file path="localscoop.php">
+    <description>This file contains the block registration code in the form of a single block plugin. Any other plugin related functionality should be added to this file. All block rendering functionality should go to the `render.php` file.</description>
+    <content><![CDATA[<?php
+/**
+ * Plugin Name:       LocalScoop
+ * Plugin URI:        https://wordpress.org/plugins/localscoop/
+ * Description:       Local business information block
+ * Version:           0.1.0
+ * Requires at least: 6.1
+ * Requires PHP:      7.4
+ * Author:            iconick
+ * License:           GPLv2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       localscoop
+ * Domain Path:       /languages
+ *
+ * @package LocalScoop
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+define( 'LOCALSCOOP_VERSION', '0.1.0' );
+define( 'LOCALSCOOP_URL', plugin_dir_url( __FILE__ ) );
+define( 'LOCALSCOOP_PATH', plugin_dir_path( __FILE__ ) );
+
+/**
+ * Registers the block using the metadata loaded from the `block.json` file.
+ * Behind the scenes, it registers also all assets so they can be enqueued
+ * through the block editor in the corresponding context.
+ *
+ * @see https://developer.wordpress.org/reference/functions/register_block_type/
+ */
+if ( ! function_exists( 'telex_localscoop_block_init' ) ) {
+	function telex_localscoop_block_init() {
+		register_block_type( __DIR__ . '/build/' );
+	}
+}
+add_action( 'init', 'telex_localscoop_block_init' );
+
+/**
+ * Get place details from API with caching
+ * @param string $place_id Sanitized place ID
+ * @param string $api_key Sanitized API key
+ * @return array|WP_Error Place data or error
+ */
+if ( ! function_exists( 'telex_localscoop_get_place_details' ) ) {
+	function telex_localscoop_get_place_details( $place_id, $api_key ) {
+		// Validate and sanitize place ID
+		if ( ! preg_match( '/^[a-zA-Z0-9_-]+$/', $place_id ) ) {
+			return new WP_Error( 'invalid_place_id', __( 'Invalid place ID format', 'localscoop' ) );
+		}
+		
+		// Sanitize API key
+		$api_key = sanitize_text_field( $api_key );
+		if ( empty( $api_key ) ) {
+			return new WP_Error( 'invalid_api_key', __( 'Invalid API key', 'localscoop' ) );
+		}
+		
+		// Check cache first
+		$cache_key = 'localscoop_' . md5( $place_id . NONCE_SALT );
+		$cached_data = get_transient( $cache_key );
+		
+		if ( false !== $cached_data && is_array( $cached_data ) ) {
+			return $cached_data;
+		}
+		
+		// Use the new Places API (New) endpoint for Place Details
+		$url = 'https://places.googleapis.com/v1/places/' . urlencode( $place_id );
+		
+		$response = wp_remote_get( $url, array(
+			'timeout' => 15,
+			'sslverify' => true,
+			'headers' => array(
+				'Content-Type' => 'application/json',
+				'X-Goog-Api-Key' => $api_key,
+				'X-Goog-FieldMask' => 'id,displayName,formattedAddress,regularOpeningHours,businessStatus,nationalPhoneNumber,internationalPhoneNumber,googleMapsUri,location',
+				'User-Agent' => 'LocalScoop/' . LOCALSCOOP_VERSION . ' WordPress/' . get_bloginfo( 'version' )
+			)
+		) );
+		
+		if ( is_wp_error( $response ) ) {
+			error_log( 'LocalScoop API Error: ' . $response->get_error_message() );
+			return $response;
+		}
+		
+		$response_code = wp_remote_retrieve_response_code( $response );
+		$response_body = wp_remote_retrieve_body( $response );
+		
+		if ( $response_code !== 200 ) {
+			$error_data = json_decode( $response_body, true );
+			$error_message = 'API request failed with code ' . intval( $response_code );
+			
+			if ( isset( $error_data['error']['message'] ) ) {
+				$error_message = sanitize_text_field( $error_data['error']['message'] );
+			}
+			
+			error_log( 'LocalScoop API Error: ' . $error_message );
+			return new WP_Error( 'api_error', sprintf( __( 'Google Places API error: %s', 'localscoop' ), $error_message ) );
+		}
+		
+		$data = json_decode( $response_body, true );
+		
+		if ( empty( $data ) || ! is_array( $data ) ) {
+			return new WP_Error( 'api_error', __( 'Invalid API response', 'localscoop' ) );
+		}
+		
+		// Process and sanitize the data
+		$processed_data = array(
+			'name' => isset( $data['displayName']['text'] ) ? sanitize_text_field( $data['displayName']['text'] ) : 'Local Business',
+			'formatted_address' => isset( $data['formattedAddress'] ) ? sanitize_text_field( $data['formattedAddress'] ) : '',
+			'phone' => isset( $data['nationalPhoneNumber'] ) ? sanitize_text_field( $data['nationalPhoneNumber'] ) : ( isset( $data['internationalPhoneNumber'] ) ? sanitize_text_field( $data['internationalPhoneNumber'] ) : '' ),
+			'is_open_now' => null,
+			'google_maps_url' => isset( $data['googleMapsUri'] ) ? esc_url_raw( $data['googleMapsUri'] ) : ''
+		);
+		
+		// Handle opening hours for new API format
+		if ( isset( $data['regularOpeningHours']['periods'] ) && is_array( $data['regularOpeningHours']['periods'] ) ) {
+			$current_time = current_time( 'timestamp' );
+			$current_day = (int) gmdate( 'w', $current_time ); // 0 = Sunday, 1 = Monday, etc.
+			$current_time_minutes = (int) gmdate( 'H', $current_time ) * 60 + (int) gmdate( 'i', $current_time );
+			
+			$is_open = false;
+			
+			foreach ( $data['regularOpeningHours']['periods'] as $period ) {
+				if ( isset( $period['open']['day'], $period['open']['hour'], $period['open']['minute'] ) && 
+					 absint( $period['open']['day'] ) === $current_day ) {
+					
+					$open_minutes = absint( $period['open']['hour'] ) * 60 + absint( $period['open']['minute'] );
+					
+					if ( isset( $period['close']['hour'], $period['close']['minute'] ) ) {
+						$close_minutes = absint( $period['close']['hour'] ) * 60 + absint( $period['close']['minute'] );
+						
+						if ( $current_time_minutes >= $open_minutes && $current_time_minutes < $close_minutes ) {
+							$is_open = true;
+							break;
+						}
+					} else {
+						// Open 24 hours
+						if ( $current_time_minutes >= $open_minutes ) {
+							$is_open = true;
+							break;
+						}
+					}
+				}
+			}
+			
+			$processed_data['is_open_now'] = $is_open;
+		}
+		
+		// Create secure Google Maps URL if not provided
+		if ( empty( $processed_data['google_maps_url'] ) && isset( $data['location']['latitude'], $data['location']['longitude'] ) ) {
+			$processed_data['google_maps_url'] = sprintf(
+				'https://www.google.com/maps/search/?api=1&query=%s&query_place_id=%s',
+				urlencode( $processed_data['name'] ),
+				urlencode( $place_id )
+			);
+		}
+		
+		// Cache for 30 minutes with validation
+		if ( is_array( $processed_data ) && ! empty( $processed_data['name'] ) ) {
+			set_transient( $cache_key, $processed_data, 30 * MINUTE_IN_SECONDS );
+		}
+		
+		return $processed_data;
+	}
+}
+
+/**
+ * Get API key from options or constants with validation
+ * @return string Sanitized API key
+ */
+if ( ! function_exists( 'telex_localscoop_get_api_key' ) ) {
+	function telex_localscoop_get_api_key() {
+		$api_key = '';
+		
+		// Check for constant first
+		if ( defined( 'GOOGLE_PLACES_API_KEY' ) && is_string( GOOGLE_PLACES_API_KEY ) ) {
+			$api_key = GOOGLE_PLACES_API_KEY;
+		}
+		
+		// Check environment variable if constant not set
+		if ( empty( $api_key ) ) {
+			$env_key = getenv( 'GOOGLE_PLACES_API_KEY' );
+			if ( is_string( $env_key ) && ! empty( $env_key ) ) {
+				$api_key = $env_key;
+			}
+		}
+		
+		// Fallback to database option
+		if ( empty( $api_key ) ) {
+			$api_key = get_option( 'localscoop_api_key', '' );
+		}
+		
+		return sanitize_text_field( $api_key );
+	}
+}
+
+/**
+ * Add admin menu for settings
+ */
+if ( ! function_exists( 'telex_localscoop_add_admin_menu' ) ) {
+	function telex_localscoop_add_admin_menu() {
+		add_options_page(
+			__( 'LocalScoop Settings', 'localscoop' ),
+			__( 'LocalScoop', 'localscoop' ),
+			'manage_options',
+			'localscoop-settings',
+			'telex_localscoop_render_admin_page'
+		);
+	}
+}
+add_action( 'admin_menu', 'telex_localscoop_add_admin_menu' );
+
+/**
+ * Initialize settings with proper validation
+ */
+if ( ! function_exists( 'telex_localscoop_init_settings' ) ) {
+	function telex_localscoop_init_settings() {
+		register_setting( 'localscoop_settings', 'localscoop_api_key', array(
+			'type' => 'string',
+			'sanitize_callback' => 'telex_localscoop_sanitize_api_key',
+			'show_in_rest' => false,
+			'default' => ''
+		) );
+	}
+}
+add_action( 'admin_init', 'telex_localscoop_init_settings' );
+
+/**
+ * Sanitize API key
+ * @param string $api_key Raw API key input
+ * @return string Sanitized API key
+ */
+if ( ! function_exists( 'telex_localscoop_sanitize_api_key' ) ) {
+	function telex_localscoop_sanitize_api_key( $api_key ) {
+		$api_key = sanitize_text_field( $api_key );
+		
+		// Validate API key format (Google API keys are typically 39 characters)
+		if ( ! empty( $api_key ) && ( strlen( $api_key ) < 30 || strlen( $api_key ) > 50 || ! preg_match( '/^[a-zA-Z0-9_-]+$/', $api_key ) ) ) {
+			add_settings_error( 'localscoop_api_key', 'invalid_api_key', __( 'Invalid API key format. Please check your Google Places API key.', 'localscoop' ) );
+			return get_option( 'localscoop_api_key', '' ); // Keep old value on error
+		}
+		
+		return $api_key;
+	}
+}
+
+/**
+ * Render admin page with proper nonce protection
+ */
+if ( ! function_exists( 'telex_localscoop_render_admin_page' ) ) {
+	function telex_localscoop_render_admin_page() {
+		// Check user permissions
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( __( 'You do not have sufficient permissions to access this page.', 'localscoop' ) );
+		}
+		
+		// Test API connection if requested and nonce is valid
+		$api_test_result = null;
+		if ( isset( $_GET['test_api'] ) && wp_verify_nonce( $_GET['_wpnonce'], 'test_localscoop_api' ) ) {
+			$api_key = telex_localscoop_get_api_key();
+			if ( ! empty( $api_key ) ) {
+				$test_place_id = 'ChIJN1t_tDeuEmsRUsoyG83frY4'; // Google Sydney Opera House
+				$api_test_result = telex_localscoop_get_place_details( $test_place_id, $api_key );
+			}
+		}
+		?>
+		<div class="wrap">
+			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+			
+			<div class="notice notice-info">
+				<p>
+					<?php esc_html_e( 'LocalScoop displays your business information in a mobile-friendly toolbar. Always shows sample data when no API key is configured. To display real business data, you need a Google Places API key with the new Places API (New) enabled.', 'localscoop' ); ?>
+					<a href="https://developers.google.com/maps/documentation/places/web-service/place-details" target="_blank" rel="noopener">
+						<?php esc_html_e( 'Get an API key', 'localscoop' ); ?>
+					</a>
+				</p>
+			</div>
+			
+			<?php if ( $api_test_result ): ?>
+				<?php if ( is_wp_error( $api_test_result ) ): ?>
+					<div class="notice notice-error">
+						<p><strong><?php esc_html_e( 'API Test Failed:', 'localscoop' ); ?></strong> <?php echo esc_html( $api_test_result->get_error_message() ); ?></p>
+					</div>
+				<?php else: ?>
+					<div class="notice notice-success">
+						<p><strong><?php esc_html_e( 'API Test Successful!', 'localscoop' ); ?></strong> <?php printf( esc_html__( 'Retrieved data for: %s', 'localscoop' ), esc_html( $api_test_result['name'] ?? 'Unknown' ) ); ?></p>
+					</div>
+				<?php endif; ?>
+			<?php endif; ?>
+			
+			<form method="post" action="options.php">
+				<?php settings_fields( 'localscoop_settings' ); ?>
+				<?php do_settings_sections( 'localscoop_settings' ); ?>
+				<table class="form-table">
+					<tr>
+						<th scope="row">
+							<label for="localscoop_api_key"><?php esc_html_e( 'Google Places API Key', 'localscoop' ); ?></label>
+						</th>
+						<td>
+							<input type="password" 
+								   id="localscoop_api_key"
+								   name="localscoop_api_key" 
+								   value="<?php echo esc_attr( get_option( 'localscoop_api_key', '' ) ); ?>"
+								   class="regular-text"
+								   autocomplete="off" />
+							<p class="description">
+								<?php esc_html_e( 'Enter your Google Places API key. Make sure the Places API (New) is enabled. This is optional - LocalScoop will show sample data without an API key.', 'localscoop' ); ?>
+							</p>
+							<?php $api_key = telex_localscoop_get_api_key(); ?>
+							<?php if ( ! empty( $api_key ) ): ?>
+								<p>
+									<a href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'test_api', '1' ), 'test_localscoop_api' ) ); ?>" class="button button-secondary">
+										<?php esc_html_e( 'Test API Connection', 'localscoop' ); ?>
+									</a>
+								</p>
+							<?php endif; ?>
+						</td>
+					</tr>
+				</table>
+				<?php submit_button(); ?>
+			</form>
+			
+			<div class="notice notice-info">
+				<h3><?php esc_html_e( 'How to Use LocalScoop', 'localscoop' ); ?></h3>
+				<ol>
+					<li><strong><?php esc_html_e( 'Add the Block:', 'localscoop' ); ?></strong> <?php esc_html_e( 'Insert LocalScoop into any post or page - it works immediately with sample data', 'localscoop' ); ?></li>
+					<li><strong><?php esc_html_e( 'Customize Appearance:', 'localscoop' ); ?></strong> <?php esc_html_e( 'Use the sidebar controls to customize colors, text, and mobile toolbar settings', 'localscoop' ); ?></li>
+					<li><strong><?php esc_html_e( 'Optional - Add Real Data:', 'localscoop' ); ?></strong> <?php esc_html_e( 'Get a Google Place ID and API key to display live business information', 'localscoop' ); ?></li>
+					<li><strong><?php esc_html_e( 'Find Place ID:', 'localscoop' ); ?></strong> <?php esc_html_e( 'Use the Google Place ID Finder online tool to find your business ID', 'localscoop' ); ?></li>
+					<li><strong><?php esc_html_e( 'Mobile Toolbar:', 'localscoop' ); ?></strong> <?php esc_html_e( 'On mobile devices (900px and below), buttons automatically transform into a fixed bottom toolbar', 'localscoop' ); ?></li>
+				</ol>
+				<p><strong><?php esc_html_e( 'LocalScoop always works!', 'localscoop' ); ?></strong> <?php esc_html_e( 'No API key required to start using it with sample data and custom styling.', 'localscoop' ); ?></p>
+			</div>
+		</div>
+		<?php
+	}
+}
+
+/**
+ * Add REST API route for place details only with proper authentication
+ */
+if ( ! function_exists( 'telex_localscoop_register_rest_routes' ) ) {
+	function telex_localscoop_register_rest_routes() {
+		register_rest_route( 'localscoop/v1', '/place/(?P<place_id>[a-zA-Z0-9_-]+)', array(
+			'methods' => 'GET',
+			'callback' => 'telex_localscoop_handle_place_request',
+			'permission_callback' => 'telex_localscoop_check_rest_permission',
+			'args' => array(
+				'place_id' => array(
+					'required' => true,
+					'validate_callback' => 'telex_localscoop_validate_place_id',
+					'sanitize_callback' => 'sanitize_text_field',
+				)
+			)
+		) );
+	}
+}
+add_action( 'rest_api_init', 'telex_localscoop_register_rest_routes' );
+
+/**
+ * Check REST API permissions
+ * @param WP_REST_Request $request
+ * @return bool|WP_Error
+ */
+if ( ! function_exists( 'telex_localscoop_check_rest_permission' ) ) {
+	function telex_localscoop_check_rest_permission( $request ) {
+		// Check if user can edit posts (basic content creation capability)
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return new WP_Error( 'rest_forbidden', __( 'You do not have permission to access this resource.', 'localscoop' ), array( 'status' => 403 ) );
+		}
+		
+		// Verify nonce for additional security
+		$nonce = $request->get_header( 'X-WP-Nonce' );
+		if ( ! wp_verify_nonce( $nonce, 'wp_rest' ) ) {
+			return new WP_Error( 'rest_cookie_invalid_nonce', __( 'Cookie check failed.', 'localscoop' ), array( 'status' => 403 ) );
+		}
+		
+		return true;
+	}
+}
+
+/**
+ * Validate place ID format
+ * @param string $param Place ID to validate
+ * @return bool
+ */
+if ( ! function_exists( 'telex_localscoop_validate_place_id' ) ) {
+	function telex_localscoop_validate_place_id( $param ) {
+		return is_string( $param ) && preg_match( '/^[a-zA-Z0-9_-]+$/', $param ) && strlen( $param ) >= 10 && strlen( $param ) <= 100;
+	}
+}
+
+/**
+ * Handle individual place request with enhanced security
+ * @param WP_REST_Request $request
+ * @return WP_REST_Response
+ */
+if ( ! function_exists( 'telex_localscoop_handle_place_request' ) ) {
+	function telex_localscoop_handle_place_request( $request ) {
+		$place_id = sanitize_text_field( $request['place_id'] );
+		$api_key = telex_localscoop_get_api_key();
+		
+		if ( empty( $api_key ) ) {
+			return new WP_REST_Response( array( 'error' => __( 'API key not configured', 'localscoop' ) ), 400 );
+		}
+		
+		// Rate limiting check (simple implementation)
+		$rate_limit_key = 'localscoop_rate_limit_' . get_current_user_id();
+		$rate_limit_count = get_transient( $rate_limit_key );
+		
+		if ( false === $rate_limit_count ) {
+			set_transient( $rate_limit_key, 1, MINUTE_IN_SECONDS );
+		} else if ( $rate_limit_count >= 20 ) { // 20 requests per minute
+			return new WP_REST_Response( array( 'error' => __( 'Rate limit exceeded. Please try again later.', 'localscoop' ) ), 429 );
+		} else {
+			set_transient( $rate_limit_key, $rate_limit_count + 1, MINUTE_IN_SECONDS );
+		}
+		
+		$data = telex_localscoop_get_place_details( $place_id, $api_key );
+		
+		if ( is_wp_error( $data ) ) {
+			return new WP_REST_Response( array( 'error' => $data->get_error_message() ), 400 );
+		}
+		
+		return new WP_REST_Response( $data, 200 );
+	}
+}
+
+/**
+ * Plugin activation hook
+ */
+if ( ! function_exists( 'telex_localscoop_activate' ) ) {
+	function telex_localscoop_activate() {
+		// Create database table if needed for future features
+		// For now, just flush rewrite rules
+		flush_rewrite_rules();
+	}
+}
+register_activation_hook( __FILE__, 'telex_localscoop_activate' );
+
+/**
+ * Plugin deactivation hook
+ */
+if ( ! function_exists( 'telex_localscoop_deactivate' ) ) {
+	function telex_localscoop_deactivate() {
+		// Clean up transients
+		global $wpdb;
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_localscoop_%'" );
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_localscoop_%'" );
+		flush_rewrite_rules();
+	}
+}
+register_deactivation_hook( __FILE__, 'telex_localscoop_deactivate' );
+
+/**
+ * Load text domain for translations
+ */
+if ( ! function_exists( 'telex_localscoop_load_textdomain' ) ) {
+	function telex_localscoop_load_textdomain() {
+		load_plugin_textdomain( 'localscoop', false, basename( dirname( __FILE__ ) ) . '/languages' );
+	}
+}
+add_action( 'plugins_loaded', 'telex_localscoop_load_textdomain' );
+
+/**
+ * Enqueue admin scripts with proper handles
+ */
+if ( ! function_exists( 'telex_localscoop_admin_enqueue_scripts' ) ) {
+	function telex_localscoop_admin_enqueue_scripts( $hook ) {
+		if ( 'settings_page_localscoop-settings' === $hook ) {
+			wp_enqueue_script( 'localscoop-admin', LOCALSCOOP_URL . 'assets/admin.js', array( 'jquery' ), LOCALSCOOP_VERSION, true );
+			wp_enqueue_style( 'localscoop-admin', LOCALSCOOP_URL . 'assets/admin.css', array(), LOCALSCOOP_VERSION );
+		}
+	}
+}
+add_action( 'admin_enqueue_scripts', 'telex_localscoop_admin_enqueue_scripts' );]]></content>
+  </file>
+</artefact>

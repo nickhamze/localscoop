@@ -1,0 +1,163 @@
+/**
+ * LocalScoop Block Editor Styles
+ * Minimal editor-specific styling with debug panel support and mobile preview
+ */
+
+.wp-block-telex-block-localscoop {
+	// Basic editor selection indicators
+	border: 1px solid transparent;
+	transition: border-color 0.2s ease;
+	
+	&:hover {
+		border-color: #007cba;
+	}
+	
+	&.is-selected {
+		border-color: #007cba;
+		box-shadow: 0 0 0 1px #007cba;
+	}
+	
+	// Search results in inspector
+	.search-results {
+		max-height: 200px;
+		overflow-y: auto;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		padding: 8px;
+		
+		.components-card {
+			&:not(:last-child) {
+				margin-bottom: 8px;
+			}
+		}
+	}
+	
+	// Debug panel styling
+	.debug-panel {
+		font-family: 'SFMono-Regular', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+		font-size: 11px;
+		line-height: 1.4;
+		background: #f8f9fa;
+		border: 1px solid #e1e3e6;
+		border-radius: 4px;
+		padding: 8px;
+		max-height: 200px;
+		overflow-y: auto;
+		
+		.debug-entry {
+			margin-bottom: 8px;
+			padding-bottom: 6px;
+			border-bottom: 1px solid #eee;
+			
+			&:last-child {
+				border-bottom: none;
+				margin-bottom: 0;
+			}
+			
+			.debug-timestamp {
+				color: #666;
+				font-size: 10px;
+				margin-bottom: 2px;
+			}
+			
+			.debug-message {
+				font-weight: 600;
+				color: #333;
+				margin-bottom: 2px;
+			}
+			
+			.debug-data {
+				color: #0073aa;
+				font-size: 10px;
+				white-space: pre-wrap;
+				word-break: break-all;
+			}
+		}
+	}
+	
+	// Preview in editor should look like frontend but indicate it's not interactive
+	.localscoop-preview {
+		.wp-block-buttons.shop-actions {
+			.wp-block-button {
+				.wp-block-button__link {
+					pointer-events: none;
+					opacity: 0.9;
+					position: relative;
+					
+					&::after {
+						content: '(Preview - Theme Styled)';
+						position: absolute;
+						top: 100%;
+						left: 50%;
+						transform: translateX(-50%);
+						font-size: 10px;
+						color: #666;
+						white-space: nowrap;
+						margin-top: 2px;
+						font-weight: normal;
+					}
+				}
+			}
+		}
+	}
+	
+	// Loading and error states
+	.components-notice {
+		margin-bottom: 16px;
+		
+		// Enhanced error notice styling
+		&.is-error {
+			background: #f8d7da;
+			border-color: #f5c6cb;
+			color: #721c24;
+			
+			strong {
+				color: #721c24;
+			}
+			
+			small {
+				color: #856404;
+				font-style: italic;
+			}
+		}
+	}
+	
+	// Responsive editor adjustments
+	@media (max-width: 782px) {
+		.localscoop-preview .wp-block-buttons.shop-actions .wp-block-button .wp-block-button__link::after {
+			font-size: 8px;
+		}
+		
+		.debug-panel {
+			font-size: 10px;
+			max-height: 150px;
+		}
+	}
+	
+	// Very small editor screens
+	@media (max-width: 600px) {
+		.localscoop-preview .wp-block-buttons.shop-actions {
+			.wp-block-button {
+				flex: 1;
+				min-width: 0;
+				
+				.wp-block-button__link {
+					padding: 0.5rem 0.25rem;
+					min-height: 48px;
+				}
+			}
+		}
+	}
+	
+	// High contrast mode support in editor
+	@media (prefers-contrast: high) {
+		.debug-panel {
+			border-width: 2px;
+			background: white;
+		}
+		
+		.components-notice {
+			border-width: 2px;
+		}
+	}
+}

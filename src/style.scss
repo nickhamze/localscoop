@@ -1,0 +1,434 @@
+/**
+ * LocalScoop Block Frontend Styles
+ * Consistent frontend and backend mobile display using CSS-only approach
+ */
+
+.wp-block-telex-block-localscoop {
+	// Container for all buttons using WordPress core buttons class
+	.wp-block-buttons.shop-actions {
+		display: flex;
+		align-items: center;
+		gap: calc(var(--button-margin, 8px) / 2);
+		justify-content: flex-start;
+		flex-wrap: wrap;
+		
+		// Ensure buttons inherit theme styles properly
+		.wp-block-button {
+			margin: 0;
+			margin: var(--button-margin, 8px);
+			
+			// All buttons with desktop customization
+			.wp-block-button__link {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				text-decoration: none;
+				white-space: nowrap;
+				transition: all 0.2s ease;
+				cursor: pointer;
+				text-align: center;
+				position: relative;
+				border: none;
+				background: none;
+				
+				// Apply desktop customizations
+				border-width: var(--button-border-width, 0);
+				border-style: var(--button-border-style, solid);
+				border-color: var(--button-border-color, transparent);
+				color: var(--button-text-color, inherit) !important;
+				font-size: var(--button-font-size, 16px);
+				font-weight: var(--button-font-weight, normal);
+				letter-spacing: var(--button-letter-spacing, 0);
+				text-transform: var(--button-text-transform, none);
+				padding: var(--button-padding, 12px 24px);
+				border-radius: var(--button-border-radius, 8px);
+				
+				// Hover states
+				&:hover {
+					background-color: var(--button-hover-color, inherit) !important;
+					color: var(--button-hover-text-color, inherit) !important;
+					transform: translateY(-1px);
+					box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+				}
+				
+				&:active {
+					transform: translateY(0);
+					box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+				}
+				
+				// Desktop and mobile text spans
+				.desktop-text,
+				.mobile-text {
+					display: inline;
+					color: inherit;
+				}
+				
+				// Size variants with custom padding override
+				&.size-small {
+					font-size: var(--button-font-size, 0.875rem);
+					padding: var(--button-padding, 0.375rem 0.75rem);
+					min-height: 40px;
+				}
+				
+				&.size-medium {
+					font-size: var(--button-font-size, 1rem);
+					padding: var(--button-padding, 0.5rem 1rem);
+					min-height: 44px;
+				}
+				
+				&.size-large {
+					font-size: var(--button-font-size, 1.125rem);
+					padding: var(--button-padding, 0.75rem 1.5rem);
+					min-height: 52px;
+				}
+				
+				&.size-xlarge {
+					font-size: var(--button-font-size, 1.25rem);
+					padding: var(--button-padding, 1rem 2rem);
+					min-height: 60px;
+				}
+			}
+		}
+	}
+	
+	/**
+	 * MOBILE TOOLBAR - CSS-only text switching with fixed white text
+	 */
+	@media screen and (max-width: 900px) {
+		// Add body padding
+		body {
+			padding-bottom: 70px !important;
+		}
+		
+		.wp-block-buttons.shop-actions {
+			// Fixed positioning
+			position: fixed !important;
+			bottom: 0 !important;
+			left: 0 !important;
+			right: 0 !important;
+			width: 100vw !important;
+			z-index: 999 !important;
+			top: auto !important;
+			transform: none !important;
+			margin: 0 !important;
+			
+			// Background and styling
+			background-color: var(--mobile-bar-bg, rgba(255, 255, 255, 0.95)) !important;
+			border: none !important;
+			border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+			box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1) !important;
+			backdrop-filter: blur(10px) !important;
+			box-sizing: border-box !important;
+			
+			// Layout - full width buttons
+			display: flex !important;
+			flex-direction: row !important;
+			align-items: stretch !important;
+			justify-content: stretch !important;
+			gap: 0 !important;
+			flex-wrap: nowrap !important;
+			overflow: hidden !important;
+			padding: 0 !important;
+			height: 64px !important;
+			min-height: 64px !important;
+			max-height: 64px !important;
+			
+			// Button containers - equal width
+			.wp-block-button {
+				flex: 1 1 0 !important;
+				min-width: 0 !important;
+				max-width: none !important;
+				margin: 0 !important;
+				padding: 0 !important;
+				box-sizing: border-box !important;
+				height: 100% !important;
+				display: flex !important;
+				
+				// Borders between buttons
+				border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
+				border-left: none !important;
+				border-top: none !important;
+				border-bottom: none !important;
+				
+				&:last-child {
+					border-right: none !important;
+				}
+				
+				&:first-child {
+					border-left: none !important;
+				}
+				
+				// Button elements - mobile toolbar styling with FORCED WHITE TEXT
+				.wp-block-button__link {
+					width: 100% !important;
+					height: 100% !important;
+					min-height: 64px !important;
+					max-height: 64px !important;
+					flex: 1 !important;
+					
+					// Reset all desktop styling
+					padding: 0 !important;
+					margin: 0 !important;
+					border: none !important;
+					border-radius: 0 !important;
+					outline: none !important;
+					box-sizing: border-box !important;
+					
+					// Layout
+					display: flex !important;
+					align-items: center !important;
+					justify-content: center !important;
+					position: relative !important;
+					overflow: hidden !important;
+					
+					// FORCE WHITE TEXT - override everything
+					color: #FFFFFF !important;
+					font-weight: 700 !important;
+					text-decoration: none !important;
+					text-transform: uppercase !important;
+					letter-spacing: 0.5px !important;
+					font-size: var(--mobile-text-font-size, 14px) !important;
+					line-height: 1 !important;
+					opacity: 1 !important;
+					
+					// Hide desktop text, show mobile text with WHITE color
+					.desktop-text {
+						display: none !important;
+					}
+					
+					.mobile-text {
+						display: inline !important;
+						color: #FFFFFF !important;
+						font-weight: 700 !important;
+						font-size: inherit !important;
+						text-transform: inherit !important;
+						letter-spacing: inherit !important;
+					}
+					
+					// Interaction states - maintain white text
+					transition: all 0.2s ease !important;
+					
+					&:hover {
+						opacity: 0.85 !important;
+						color: #FFFFFF !important;
+						
+						.mobile-text {
+							color: #FFFFFF !important;
+						}
+					}
+					
+					&:active {
+						transform: scale(0.98) !important;
+						opacity: 0.7 !important;
+						color: #FFFFFF !important;
+						
+						.mobile-text {
+							color: #FFFFFF !important;
+						}
+					}
+				}
+			}
+			
+			// Phone button - colors with white text
+			.phone-button {
+				.wp-block-button__link {
+					background-color: var(--phone-button-bg, #007cba) !important;
+					color: #FFFFFF !important;
+					
+					.mobile-text {
+						color: #FFFFFF !important;
+					}
+					
+					&:hover, &:focus {
+						color: #FFFFFF !important;
+						
+						.mobile-text {
+							color: #FFFFFF !important;
+						}
+					}
+					
+					&:active {
+						background-color: color-mix(in srgb, var(--phone-button-bg, #007cba) 75%, black) !important;
+						color: #FFFFFF !important;
+						
+						.mobile-text {
+							color: #FFFFFF !important;
+						}
+					}
+				}
+			}
+			
+			// Directions button - colors with white text
+			.directions-button {
+				.wp-block-button__link {
+					background-color: var(--directions-button-bg, #10b981) !important;
+					color: #FFFFFF !important;
+					
+					.mobile-text {
+						color: #FFFFFF !important;
+					}
+					
+					&:hover, &:focus {
+						color: #FFFFFF !important;
+						
+						.mobile-text {
+							color: #FFFFFF !important;
+						}
+					}
+					
+					&:active {
+						background-color: color-mix(in srgb, var(--directions-button-bg, #10b981) 75%, black) !important;
+						color: #FFFFFF !important;
+						
+						.mobile-text {
+							color: #FFFFFF !important;
+						}
+					}
+				}
+			}
+			
+			// Status button - colors with white text (disabled, but styled)
+			.open-status-button {
+				button.wp-block-button__link {
+					pointer-events: none !important;
+					cursor: default !important;
+					font-size: var(--mobile-text-font-size, 14px) !important;
+					color: #FFFFFF !important;
+					text-transform: uppercase !important;
+					letter-spacing: 0.5px !important;
+					font-weight: 700 !important;
+					line-height: 1 !important;
+					opacity: 1 !important;
+					
+					&.open {
+						background-color: var(--open-status-color, #10b981) !important;
+						color: #FFFFFF !important;
+					}
+					
+					&.closed {
+						background-color: var(--closed-status-color, #ef4444) !important;
+						color: #FFFFFF !important;
+					}
+				}
+			}
+		}
+		
+		// Smaller mobile screens
+		@media screen and (max-width: 480px) {
+			body {
+				padding-bottom: 60px !important;
+			}
+			
+			.wp-block-buttons.shop-actions {
+				height: 56px !important;
+				min-height: 56px !important;
+				max-height: 56px !important;
+				
+				.wp-block-button .wp-block-button__link {
+					height: 100% !important;
+					min-height: 56px !important;
+					max-height: 56px !important;
+					font-size: calc(var(--mobile-text-font-size, 14px) - 2px) !important;
+					color: #FFFFFF !important;
+					
+					.mobile-text {
+						color: #FFFFFF !important;
+					}
+				}
+				
+				.open-status-button button.wp-block-button__link {
+					font-size: calc(var(--mobile-text-font-size, 14px) - 2px) !important;
+					color: #FFFFFF !important;
+				}
+			}
+		}
+		
+		@media screen and (max-width: 360px) {
+			body {
+				padding-bottom: 55px !important;
+			}
+			
+			.wp-block-buttons.shop-actions {
+				height: 52px !important;
+				min-height: 52px !important;
+				max-height: 52px !important;
+				
+				.wp-block-button .wp-block-button__link {
+					height: 100% !important;
+					min-height: 52px !important;
+					max-height: 52px !important;
+					font-size: calc(var(--mobile-text-font-size, 14px) - 3px) !important;
+					color: #FFFFFF !important;
+					
+					.mobile-text {
+						color: #FFFFFF !important;
+					}
+				}
+				
+				.open-status-button button.wp-block-button__link {
+					font-size: calc(var(--mobile-text-font-size, 14px) - 3px) !important;
+					color: #FFFFFF !important;
+				}
+			}
+		}
+	}
+	
+	// Desktop reset - show desktop text, hide mobile text
+	@media screen and (min-width: 901px) {
+		body {
+			padding-bottom: 0 !important;
+		}
+		
+		.wp-block-buttons.shop-actions {
+			// Reset all mobile positioning
+			position: static !important;
+			bottom: auto !important;
+			left: auto !important;
+			right: auto !important;
+			width: auto !important;
+			height: auto !important;
+			min-height: auto !important;
+			max-height: none !important;
+			z-index: auto !important;
+			
+			// Reset background and borders
+			background-color: transparent !important;
+			border: none !important;
+			box-shadow: none !important;
+			backdrop-filter: none !important;
+			
+			// Reset layout
+			gap: calc(var(--button-margin, 8px) / 2) !important;
+			flex-wrap: wrap !important;
+			justify-content: flex-start !important;
+			padding: 0 !important;
+			
+			.wp-block-button {
+				// Reset button container
+				flex: none !important;
+				width: auto !important;
+				height: auto !important;
+				max-width: none !important;
+				border: none !important;
+				margin: var(--button-margin, 8px) !important;
+				
+				.wp-block-button__link {
+					// Reset all mobile button styles - let custom styles take over
+					width: auto !important;
+					height: auto !important;
+					min-height: auto !important;
+					max-height: none !important;
+					
+					// Show desktop text, hide mobile text
+					.desktop-text {
+						display: inline !important;
+					}
+					
+					.mobile-text {
+						display: none !important;
+					}
+				}
+			}
+		}
+	}
+}

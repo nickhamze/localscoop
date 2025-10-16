@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",function(){console.log("LocalScoop mobile toolbar loaded - CSS handles text switching!")}),"loading"!==document.readyState&&console.log("LocalScoop mobile toolbar loaded - CSS handles text switching!");
