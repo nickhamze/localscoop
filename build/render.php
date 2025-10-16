@@ -213,7 +213,6 @@ if ( ! empty( $inline_styles ) ) {
             <div class="localscoop-mobile-content">
                 <?php if ( $show_open_status && isset( $place_data['is_open_now'] ) ): ?>
                 <div class="localscoop-mobile-status">
-                    <div class="localscoop-mobile-status-indicator <?php echo $place_data['is_open_now'] ? 'open' : 'closed'; ?>"></div>
                     <div class="localscoop-mobile-status-text"><?php echo $place_data['is_open_now'] ? esc_html__( 'OPEN', 'localscoop' ) : esc_html__( 'CLOSED', 'localscoop' ); ?></div>
                 </div>
                 <?php endif; ?>

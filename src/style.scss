@@ -151,26 +151,15 @@
 						.localscoop-mobile-status {
 							display: flex;
 							align-items: center;
-							gap: 0.5rem;
+							justify-content: center;
 							padding: 0.75rem;
 							flex: 1;
 							border-right: 4px solid #000000;
 							
-							.localscoop-mobile-status-indicator {
-								width: 1rem;
-								height: 1rem;
-								border: 2px solid #000000;
-								background-color: #4ade80; // bg-green-400
-								
-								&.closed {
-									background-color: #ef4444; // bg-red-500
-								}
-							}
-							
 							.localscoop-mobile-status-text {
 								text-transform: uppercase;
 								font-size: 0.75rem;
-								letter-spacing: -0.025em;
+								letter-spacing: 0.025em;
 								font-weight: 600;
 							}
 						}

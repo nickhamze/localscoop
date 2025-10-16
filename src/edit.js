@@ -271,7 +271,6 @@ export default function Edit({ attributes, setAttributes }) {
 					<div className="localscoop-mobile-content">
 						{showOpenStatus && data.is_open_now !== null && data.is_open_now !== undefined && (
 							<div className="localscoop-mobile-status">
-								<div className={`localscoop-mobile-status-indicator ${data.is_open_now ? 'open' : 'closed'}`}></div>
 								<div className="localscoop-mobile-status-text">{data.is_open_now ? __('OPEN', 'localscoop') : __('CLOSED', 'localscoop')}</div>
 							</div>
 						)}
